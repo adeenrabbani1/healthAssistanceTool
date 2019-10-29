@@ -11,8 +11,8 @@ package entity;
  */
 public class Admin extends Person {
 
-    public Admin(boolean flagCanAssign, boolean flagCanAddAdmin, boolean flagCanAddSurveyor, boolean flagCanViewResult, String name, String email, String phone, String age) {
-        super(name, email, phone, age);
+    public Admin(boolean flagCanAssign, boolean flagCanAddAdmin, boolean flagCanAddSurveyor, boolean flagCanViewResult, String name, String email, String phone, String age, String role) {
+        super(name, email, phone,role, age);
         this.flagCanAssign = flagCanAssign;
         this.flagCanAddAdmin = flagCanAddAdmin;
         this.flagCanAddSurveyor = flagCanAddSurveyor;
@@ -52,9 +52,7 @@ public class Admin extends Person {
         this.flagCanViewResult = flagCanViewResult;
     }
     
-    public void assignSurveyor(Hospital h , int id){
-        if(this.isFlagCanAddSurveyor()){
-        h.setSurveyorId(id);
+   
     }
-  }
-}
+  
+

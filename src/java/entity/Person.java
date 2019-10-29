@@ -12,15 +12,26 @@ package entity;
 public class Person {
     private String name;
     private String email;
-    private String phone;
-    public Person(){}
-    public Person(String name, String email, String phone, String age) {
+
+    public Person(String name, String email, String phone, String role, String age) {
         this.name = name;
         this.email = email;
         this.phone = phone;
+        this.role = role;
         this.age = age;
     }
+    private String phone;
+    private String role;
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+    public Person(){}
+    
     public String getName() {
         return name;
     }

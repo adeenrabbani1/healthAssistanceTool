@@ -21,12 +21,14 @@ public class Hospital {
     private int numOfOutPatient;
     private int numOfInPatient;
     private int numOfPatient;
-    private Director hospitalDirector;
-    private Cordinator patientSafetyCordinator;
-    private int surveyorId;
+    //as director is not specific to our system! hospital will register director on its own
+   private String directorName;
+   private String directorEmail;
+   private String directorPhone;
     //constructor for setting all the values for the hostpital
-
-    public Hospital(String name, String phone, String licenseNum, String address, String country, int numOfBeds, int numOfPatients, int numOfOutPatient, int numOfInPatient, int numOfPatient,Director hospitalDirector, Cordinator patientSafetyCordinator) {
+   
+   
+    public Hospital(String name, String phone, String licenseNum, String address, String country, int numOfBeds, int numOfPatients, int numOfOutPatient, int numOfInPatient, int numOfPatient, String directorName, String directorEmail, String directorPhone) {
         this.name = name;
         this.phone = phone;
         this.licenseNum = licenseNum;
@@ -37,9 +39,9 @@ public class Hospital {
         this.numOfOutPatient = numOfOutPatient;
         this.numOfInPatient = numOfInPatient;
         this.numOfPatient = numOfPatient;
-        
-        this.hospitalDirector = hospitalDirector;
-        this.patientSafetyCordinator = patientSafetyCordinator;
+        this.directorName = directorName;
+        this.directorEmail = directorEmail;
+        this.directorPhone = directorPhone;
     }
 
     public String getName() {
@@ -98,6 +100,31 @@ public class Hospital {
         this.numOfPatients = numOfPatients;
     }
 
+   
+    public String getDirectorName() {
+        return directorName;
+    }
+
+    public void setDirectorName(String directorName) {
+        this.directorName = directorName;
+    }
+
+    public String getDirectorEmail() {
+        return directorEmail;
+    }
+
+    public void setDirectorEmail(String directorEmail) {
+        this.directorEmail = directorEmail;
+    }
+
+    public String getDirectorPhone() {
+        return directorPhone;
+    }
+
+    public void setDirectorPhone(String directorPhone) {
+        this.directorPhone = directorPhone;
+    }
+
     public int getNumOfOutPatient() {
         return numOfOutPatient;
     }
@@ -107,15 +134,6 @@ public class Hospital {
     }
    
     //set the surveyor here for the hospital
-    
-    public int getSurveyorId() {
-        return surveyorId;
-    }
-
-    public void setSurveyorId (int id) {
-        this.surveyorId = id;
-    }
-
     public int getNumOfInPatient() {
         return numOfInPatient;
     }
@@ -133,26 +151,5 @@ public class Hospital {
     }
 
 
-    public Director getHospitalDirector() {
-        return hospitalDirector;
-    } 
-    public void setHospitalDirector(Director hospitalDirector) {
-        this.hospitalDirector = hospitalDirector;
-    }
-
-    public Cordinator getPatientSafetyCordinator() {
-        return patientSafetyCordinator;
-    }
-
-    public void setPatientSafetyCordinator(Cordinator patientSafetyCordinator) {
-        this.patientSafetyCordinator = patientSafetyCordinator;
-    }
-    public void registerDirector(String name,String email, String phone,String age){
-        //if there is a hospital then only director exists mou!
-         Director d1 = new Director(name,email,phone,age);
-    }
-    public void registerCordinator(String name,String email, String phone,String age){
-        Cordinator c1 = new Cordinator (name,email,phone,age);
-    }
-
+    
 }
