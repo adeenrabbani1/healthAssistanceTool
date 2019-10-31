@@ -1,4 +1,7 @@
-nbproject/
+core
+nbproject/*
+!nbproject/project.properties
+!nbproject/project.xml
 # Compiled class file
 *.class
 
