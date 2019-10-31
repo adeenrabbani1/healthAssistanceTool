@@ -5,8 +5,10 @@
  */
 package servlets;
 
+import entity.Admin;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.Integer.parseInt;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -72,11 +74,8 @@ public class loginControl extends HttpServlet {
                 //Retrieve by column name
                 //Display values
                 if (rs.next() == true) {
-                    out.println("I'm here if");
                     role = rs.getString("role");
-                    out.println(role);
                     if (role.equals("admin")) {
-                        out.println("I'm here");
                         id = "admin_id";
                         dashboard = "admin/dashboard.jsp";
                     } else if (role == "surveyor") {
@@ -89,11 +88,17 @@ public class loginControl extends HttpServlet {
                     sql = "SELECT * FROM " + role + " WHERE " + id + " = '" + rs.getString(id) + "'";
                     rs = stmt.executeQuery(sql);
                     rs.next();
+                    boolean assign;
+                    boolean addAdmin;
+                    boolean addSyr;
+                    boolean showRes;
+                    assign = rs.getString("can_assign").equals("1") ? true : false;
+                    addAdmin = rs.getString("can_add_admin").equals("1") ? true : false;
+                    addSyr = rs.getString("can_add_surveyor").equals("1") ? true : false;
+                    showRes = rs.getString("can_view_result").equals("1") ? true : false;
+                    Admin admin = new Admin(parseInt(rs.getString(id), 10), assign, addAdmin, addSyr, showRes, rs.getString("name"), rs.getString("email"), rs.getString("phone"), rs.getString("age"), rs.getString("role"), "Don't Even Try");
                     HttpSession session = request.getSession(true);
-                    session.setAttribute("name", rs.getString("name"));
-                    session.setAttribute("role", role);
-                    session.setAttribute("id", rs.getString(id));
-
+                    session.setAttribute("admin", admin);
                 }
                 // Close all the connections 
                 con.close();

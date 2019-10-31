@@ -19,7 +19,7 @@ public class Admin extends User {
     public Admin(int adminid, boolean flagCanAssign, boolean flagCanAddAdmin, boolean flagCanAddSurveyor, boolean flagCanViewResult, String name, String email, String phone, String age, String role, String password) {
         super(name, email, phone, role, age, password);
         this.admin_id = adminid;
-        this.flagCanAssign = flagCanAssign;
+        this.flagCanAssign = flagCanAssign; 
         this.flagCanAddAdmin = flagCanAddAdmin;
         this.flagCanAddSurveyor = flagCanAddSurveyor;
         this.flagCanViewResult = flagCanViewResult;
@@ -58,4 +58,11 @@ public class Admin extends User {
         this.flagCanViewResult = flagCanViewResult;
     }
 
+    public int getAdmin_id() {
+        return admin_id;
+    }
+
+    public void setAdmin_id(int admin_id) {
+        this.admin_id = admin_id;
+    }
 }

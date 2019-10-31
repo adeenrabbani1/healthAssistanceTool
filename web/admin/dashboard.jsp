@@ -3,7 +3,6 @@
     Created on : Oct 30, 2019, 7:29:14 PM
     Author     : SHERIF ABOUELMAGD
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,6 +11,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>${admin.getAdmin_id()}</h1>
     </body>
-</html>
+</html> 
