@@ -9,19 +9,24 @@ package entity;
  *
  * @author adeen
  */
-public class Person {
+public class User {
+    
+   
     private String name;
     private String email;
+    private String password;
+    private String phone;
+    private String role;
+    private String age;
 
-    public Person(String name, String email, String phone, String role, String age) {
+    public User(String name, String email, String phone, String role, String age, String password) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.role = role;
         this.age = age;
+        this.password = password;
     }
-    private String phone;
-    private String role;
 
     public String getRole() {
         return role;
@@ -30,8 +35,10 @@ public class Person {
     public void setRole(String role) {
         this.role = role;
     }
-    public Person(){}
-    
+
+    public User() {
+    }
+
     public String getName() {
         return name;
     }
@@ -63,6 +70,5 @@ public class Person {
     public void setAge(String age) {
         this.age = age;
     }
-    private String age;
-    
+
 }

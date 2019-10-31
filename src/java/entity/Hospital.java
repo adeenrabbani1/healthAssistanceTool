@@ -11,6 +11,7 @@ package entity;
  */
 public class Hospital {
 
+    private int hospitalId;
     private String name;
     private String phone;
     private String licenseNum;
@@ -22,13 +23,14 @@ public class Hospital {
     private int numOfInPatient;
     private int numOfPatient;
     //as director is not specific to our system! hospital will register director on its own
-   private String directorName;
-   private String directorEmail;
-   private String directorPhone;
+    private String directorName;
+    private String directorEmail;
+    private String directorPhone;
     //constructor for setting all the values for the hostpital
-   
-   
-    public Hospital(String name, String phone, String licenseNum, String address, String country, int numOfBeds, int numOfPatients, int numOfOutPatient, int numOfInPatient, int numOfPatient, String directorName, String directorEmail, String directorPhone) {
+
+    public Hospital(int hospitalId, String name, String phone, String licenseNum, String address, String country, int numOfBeds, int numOfPatients, int numOfOutPatient, int numOfInPatient, int numOfPatient, String directorName, String directorEmail, String directorPhone) {
+
+        this.hospitalId = hospitalId;
         this.name = name;
         this.phone = phone;
         this.licenseNum = licenseNum;
@@ -42,6 +44,14 @@ public class Hospital {
         this.directorName = directorName;
         this.directorEmail = directorEmail;
         this.directorPhone = directorPhone;
+    }
+
+    public int getHospitalId() {
+        return hospitalId;
+    }
+
+    public void setHospitalId(int hospitalId) {
+        this.hospitalId = hospitalId;
     }
 
     public String getName() {
@@ -100,7 +110,6 @@ public class Hospital {
         this.numOfPatients = numOfPatients;
     }
 
-   
     public String getDirectorName() {
         return directorName;
     }
@@ -132,7 +141,7 @@ public class Hospital {
     public void setNumOfOutPatient(int numOfOutPatient) {
         this.numOfOutPatient = numOfOutPatient;
     }
-   
+
     //set the surveyor here for the hospital
     public int getNumOfInPatient() {
         return numOfInPatient;
@@ -150,6 +159,4 @@ public class Hospital {
         this.numOfPatient = numOfPatient;
     }
 
-
-    
 }

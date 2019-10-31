@@ -9,17 +9,23 @@ package entity;
  *
  * @author adeen
  */
-public class Admin extends Person {
+public class Admin extends User {
 
-    public Admin(boolean flagCanAssign, boolean flagCanAddAdmin, boolean flagCanAddSurveyor, boolean flagCanViewResult, String name, String email, String phone, String age, String role) {
-        super(name, email, phone,role, age);
+    //fields needed to be executed by the constructor
+    private boolean flagCanAssign, flagCanAddAdmin, flagCanAddSurveyor, flagCanViewResult;
+    private int admin_id;
+
+    //contructor method!
+    public Admin(int adminid, boolean flagCanAssign, boolean flagCanAddAdmin, boolean flagCanAddSurveyor, boolean flagCanViewResult, String name, String email, String phone, String age, String role, String password) {
+        super(name, email, phone, role, age, password);
+        this.admin_id = adminid;
         this.flagCanAssign = flagCanAssign;
         this.flagCanAddAdmin = flagCanAddAdmin;
         this.flagCanAddSurveyor = flagCanAddSurveyor;
         this.flagCanViewResult = flagCanViewResult;
     }
-    private boolean flagCanAssign, flagCanAddAdmin, flagCanAddSurveyor,flagCanViewResult;
 
+    //setters and getters methods!
     public boolean isFlagCanAssign() {
         return flagCanAssign;
     }
@@ -51,8 +57,5 @@ public class Admin extends Person {
     public void setFlagCanViewResult(boolean flagCanViewResult) {
         this.flagCanViewResult = flagCanViewResult;
     }
-    
-   
-    }
-  
 
+}
