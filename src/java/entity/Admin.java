@@ -12,50 +12,63 @@ package entity;
 public class Admin extends User {
 
     //fields needed to be executed by the constructor
-    private boolean flagCanAssign, flagCanAddAdmin, flagCanAddSurveyor, flagCanViewResult;
+    private int flagCanAssign, flagCanAddAdmin, flagCanAddSurveyor, flagCanViewResult;
     private int admin_id;
 
-    //contructor method!
-    public Admin(int adminid, boolean flagCanAssign, boolean flagCanAddAdmin, boolean flagCanAddSurveyor, boolean flagCanViewResult, String name, String email, String phone, String age, String role, String password) {
+    public Admin(int flagCanAssign, int flagCanAddAdmin, int flagCanAddSurveyor, int flagCanViewResult, String name, String email, String phone, String role, String age, String password) {
         super(name, email, phone, role, age, password);
-        this.admin_id = adminid;
         this.flagCanAssign = flagCanAssign;
         this.flagCanAddAdmin = flagCanAddAdmin;
         this.flagCanAddSurveyor = flagCanAddSurveyor;
         this.flagCanViewResult = flagCanViewResult;
+        
     }
 
-    //setters and getters methods!
-    public boolean isFlagCanAssign() {
+    
+
+    
+    //contructor method!
+    
+
+    public int getFlagCanAssign() {
         return flagCanAssign;
     }
 
-    public void setFlagCanAssign(boolean flagCanAssign) {
+    public void setFlagCanAssign(int flagCanAssign) {
         this.flagCanAssign = flagCanAssign;
     }
 
-    public boolean isFlagCanAddAdmin() {
+    public int getFlagCanAddAdmin() {
         return flagCanAddAdmin;
     }
 
-    public void setFlagCanAddAdmin(boolean flagCanAddAdmin) {
+    public void setFlagCanAddAdmin(int flagCanAddAdmin) {
         this.flagCanAddAdmin = flagCanAddAdmin;
     }
 
-    public boolean isFlagCanAddSurveyor() {
+    public int getFlagCanAddSurveyor() {
         return flagCanAddSurveyor;
     }
 
-    public void setFlagCanAddSurveyor(boolean flagCanAddSurveyor) {
+    public void setFlagCanAddSurveyor(int flagCanAddSurveyor) {
         this.flagCanAddSurveyor = flagCanAddSurveyor;
     }
 
-    public boolean isFlagCanViewResult() {
+    public int getFlagCanViewResult() {
         return flagCanViewResult;
     }
 
-    public void setFlagCanViewResult(boolean flagCanViewResult) {
+    public void setFlagCanViewResult(int flagCanViewResult) {
         this.flagCanViewResult = flagCanViewResult;
     }
 
+    public int getAdmin_id() {
+        return admin_id;
+    }
+
+    public void setAdmin_id(int admin_id) {
+        this.admin_id = admin_id;
+    }
 }
+    //setters and getters methods!
+   
