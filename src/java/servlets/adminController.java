@@ -10,6 +10,8 @@ import DAO.AdminDAO;
 import entity.Admin;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -52,6 +54,11 @@ public class adminController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        //CHECH SESSION HERE IN THE SWITCH STATEMENT BEFORE SERVING 
+        // THE PAGES TO THE USER.
+        //IF THERE IS NO SESSION, SYSTEM MUST RENDER THE LOGIN PAGE!
+        
+        
         String command = request.getParameter("command");
 
         if (command == null) {
@@ -67,6 +74,16 @@ public class adminController extends HttpServlet {
             
             case "ADD-SURVEYOR":{
                 addSurveyor(request,response);
+                break;
+            }
+            case "HOME":{
+                
+                //serve up the home page function here
+                break;
+            }
+            case "VIEW-ADMINS":{
+                
+               // viewAdmins(request, response);
                 break;
             }
         }
@@ -132,6 +149,17 @@ public class adminController extends HttpServlet {
           
         
     }
+    
+    
+    //for viewing all the registered admins
+    
+    private void viewAdmins(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, Exception{
+        
+        AdminDAO admindb = new AdminDAO();
+       List<Admin> admins =  admindb.fetchAdmins();
+        
+    }
+    
     
     
 

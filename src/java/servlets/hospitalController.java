@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package servlets;
+
 import entity.Hospital;
 import DAO.HospitalDAO;
 import java.io.IOException;
@@ -38,10 +39,13 @@ public class hospitalController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
+    
+    //PUT THE SESSION CHECK BEFORE SERVING UP THE PAGES 
+    
+    
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-       
+
         String command = request.getParameter("command");
 
         if (command == null) {
@@ -51,18 +55,20 @@ public class hospitalController extends HttpServlet {
         switch (command) {
             //later set up a route that serves up the page
             case "APPLY": {
-                hospitalApplication(request,response);
+                hospitalApplication(request, response);
                 break;
             }
 
-           //later more commands put here
+            //later more commands put here
         }
 
     }
 
-    private void hospitalApplication(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    private void hospitalApplication(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //creating the DAO so that we can use the DAO functionality
         HospitalDAO hdb = new HospitalDAO();
-         PrintWriter out = response.getWriter();
+        //getting all the values from the form
+        PrintWriter out = response.getWriter();
         String name = request.getParameter("name");
         String phone = request.getParameter("phone");
         String license = request.getParameter("license");
@@ -75,17 +81,17 @@ public class hospitalController extends HttpServlet {
         String dname = request.getParameter("dname");
         String demail = request.getParameter("demail");
         String dphone = request.getParameter("dphone");
-        
-        Hospital hospital = new Hospital (0,name,phone,license,address,country,numBeds,numPatient,numOutPat,numInPat,dname,demail,dphone);
+
+        Hospital hospital = new Hospital(0, name, phone, license, address, country, numBeds, numPatient, numOutPat, numInPat, dname, demail, dphone);
         out.print(hospital.toString());
         try {
-           int row = hdb.saveHospital(hospital);
-           
-           out.print(row);
+            int row = hdb.saveHospital(hospital);
+
+            out.print(row);
         } catch (Exception ex) {
             Logger.getLogger(hospitalController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     /**
