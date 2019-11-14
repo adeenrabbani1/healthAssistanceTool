@@ -16,6 +16,7 @@ public class Surveyor extends User{
           this.surv_id = survId;
       }
 
+      //this id is only used to hold the id after databse get query!
     public int getSurv_id() {
         return surv_id;
     }
