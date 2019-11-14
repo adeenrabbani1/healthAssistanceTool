@@ -17,7 +17,7 @@ public class Admin extends User {
 
     public Admin(int flagCanAssign, int flagCanAddAdmin, int flagCanAddSurveyor, int flagCanViewResult, String name, String email, String phone, String role, String age, String password) {
         super(name, email, phone, role, age, password);
-        this.admin_id = adminid;
+        this.admin_id = 0;
         this.flagCanAssign = flagCanAssign; 
         this.flagCanAddAdmin = flagCanAddAdmin;
         this.flagCanAddSurveyor = flagCanAddSurveyor;

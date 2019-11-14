@@ -11,6 +11,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>${admin.getAdmin_id()}</h1>
+        <h1>${admin.getName()}</h1>
     </body>
 </html> 
