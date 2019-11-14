@@ -16,19 +16,21 @@ public class Hospital {
     private String phone;
     private String licenseNum;
     private String address;
+
+    
+   
     private String country;
     private int numOfBeds;
     private int numOfPatients;
     private int numOfOutPatient;
     private int numOfInPatient;
-    private int numOfPatient;
     //as director is not specific to our system! hospital will register director on its own
     private String directorName;
     private String directorEmail;
     private String directorPhone;
     //constructor for setting all the values for the hostpital
 
-    public Hospital(int hospitalId, String name, String phone, String licenseNum, String address, String country, int numOfBeds, int numOfPatients, int numOfOutPatient, int numOfInPatient, int numOfPatient, String directorName, String directorEmail, String directorPhone) {
+    public Hospital(int hospitalId, String name, String phone, String licenseNum, String address, String country, int numOfBeds, int numOfPatients, int numOfOutPatient, int numOfInPatient, String directorName, String directorEmail, String directorPhone) {
 
         this.hospitalId = hospitalId;
         this.name = name;
@@ -40,7 +42,7 @@ public class Hospital {
         this.numOfPatients = numOfPatients;
         this.numOfOutPatient = numOfOutPatient;
         this.numOfInPatient = numOfInPatient;
-        this.numOfPatient = numOfPatient;
+        
         this.directorName = directorName;
         this.directorEmail = directorEmail;
         this.directorPhone = directorPhone;
@@ -151,12 +153,10 @@ public class Hospital {
         this.numOfInPatient = numOfInPatient;
     }
 
-    public int getNumOfPatient() {
-        return numOfPatient;
-    }
+   
 
-    public void setNumOfPatient(int numOfPatient) {
-        this.numOfPatient = numOfPatient;
+    @Override
+     public String toString() {
+        return "Hospital{" + "name=" + name + ", phone=" + phone + ", licenseNum=" + licenseNum + ", address=" + address + ", country=" + country + ", numOfBeds=" + numOfBeds + ", numOfPatients=" + this.getNumOfPatients()+ ", numOfOutPatient=" + numOfOutPatient + ", numOfInPatient=" + numOfInPatient +", directorName=" + directorName + ", directorEmail=" + directorEmail + ", directorPhone=" + directorPhone + '}';
     }
-
 }
