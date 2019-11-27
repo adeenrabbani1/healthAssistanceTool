@@ -69,7 +69,7 @@ public class AdminDAO {
            myConn = getConnection();
             // create sql statement
             String sql = "insert into admin "
-                        + "(name,email,age,password,role,can_assign,can_add_admin,can_add_surveyor,can_view_result) "
+                        + "(name,email,age,phone,password,role,can_assign,can_add_admin,can_add_surveyor,can_view_result) "
                         + "values (?,?,?,?,?,?,?,?,?,?)";
             // create prepared statement
             stmt = myConn.createStatement();
@@ -79,8 +79,8 @@ public class AdminDAO {
             ps.setString(1, admin.getName());
             ps.setString(2, admin.getEmail());
             ps.setString(3, admin.getAge());
-            ps.setString(4, admin.getAge());
-            ps.setString(5, admin.getPhone());
+            ps.setString(4, admin.getPhone());
+            ps.setString(5, admin.getPassword());
             ps.setString(6, admin.getRole());
             ps.setInt(7, admin.getFlagCanAssign());
             ps.setInt(8, admin.getFlagCanAddAdmin());

@@ -54,7 +54,7 @@ public class loginControl extends HttpServlet {
                 String dbUsername = "root";
                 String dbPassword = "";
 
-                Class.forName(dbDriver);
+                Class.forName("com.mysql.jdbc.Driver");
                 Connection con = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
 
                 // Create a SQL query to insert data into demo table 
