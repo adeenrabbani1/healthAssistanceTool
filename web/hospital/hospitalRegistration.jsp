@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <jsp:include page="../common/header.html"/>
+        <jsp:include page="../common/header.html"/> //for adding external common files
     </head>
     <body>
 
