@@ -5,12 +5,15 @@
  */
 package DAO;
 import entity.Hospital;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -102,8 +105,43 @@ public class HospitalDAO {
         }
         
     }
+      
+    
+    public List<Hospital> fetchHospital() throws SQLException, Exception{
+        //list of admins to hold the values fetched from the database
+        List <Hospital> hospitals = new ArrayList<>();
+        Connection myConn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
         
-        
-        
+        try {
+            //get a connection
+            myConn = getConnection();
+            //create sql statement
+            String sql = "SELECT * FROM hospital";
+            stmt = myConn.createStatement();
+            rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                int id = rs.getInt("hospital_id");
+                String name = rs.getString("name");
+                String phone = rs.getString("phone");
+                String license = rs.getString("license_num");
+                String address = rs.getString("address");
+                String country = rs.getString("country");
+                int numBeds = rs.getInt("num_of_beds");
+                int numPatients = rs.getInt("num_of_patients");
+                int numOutPatient = rs.getInt("num_of_out_patient");
+                int numInPatient = rs.getInt("num_of_in_patient");
+                String directorName = rs.getString("director_name");
+                String directorEmail = rs.getString("director_email");
+                String directorPhone = rs.getString("director_phone");
+                hospitals.add(new Hospital(id, name, phone, license, address, country, numBeds, numPatients, numOutPatient, numInPatient, directorName, directorEmail, directorPhone));
+            }
+        } finally{
+             close(myConn, stmt, rs);
+        }
+        return hospitals;
     }
+        
+}
 

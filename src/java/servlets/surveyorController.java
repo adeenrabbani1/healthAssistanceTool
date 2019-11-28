@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import entity.Surveyor;
 
 /**
  *
@@ -43,6 +44,8 @@ public class surveyorController extends HttpServlet {
             out.println("<h1>Servlet surveyorController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
+            Surveyor ser = (Surveyor) request.getSession().getAttribute("surveyor");
+            out.println(ser.getName());
         }
     }
 

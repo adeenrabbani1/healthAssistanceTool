@@ -105,7 +105,7 @@ public class AdminDAO {
     
     public List<Admin> fetchAdmins() throws SQLException, Exception{
         //list of admins to hold the values fetched from the database
-           List <Admin> admins = new ArrayList<>();
+        List <Admin> admins = new ArrayList<>();
         Connection myConn = null;
         Statement stmt = null;
         ResultSet rs = null;
@@ -113,7 +113,7 @@ public class AdminDAO {
         try {
             
              // get a connection
-           myConn = getConnection();
+            myConn = getConnection();
             // create sql statement
             String sql = "SELECT * FROM admin";
             stmt = myConn.createStatement();
@@ -123,14 +123,13 @@ public class AdminDAO {
                 String name = rs.getString("name");
                 String email= rs.getString("email");
                 String age = rs.getString("age");
-                String phone = rs.getNString("phone");
+                String phone = rs.getString ("phone");
                 String password = rs.getString("password");
                 int canAssign = rs.getInt("can_assign");
                 int canAddA = rs.getInt("can_add_admin");
                 int canAddS = rs.getInt("can_add_surveyor");
                 int canView = rs.getInt("can_view_result");
-               //Admin temp = new Admin();
-               Admin newAdmin = new Admin(canAssign, canAddA, canAddS, canView, name, email, phone, "admin", age, password); 
+               admins.add(new Admin(id, canAssign, canAddA, canAddS, canView, name, email, phone, "admin", age, password)); 
             }
            
         } finally{

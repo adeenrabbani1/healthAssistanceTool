@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -49,15 +51,15 @@ public class SurveyorDAO {
         
     }
     
-   public int addSurveyor(Surveyor surv) throws Exception{
+    public int addSurveyor(Surveyor surv) throws Exception{
        
        
-      Connection myConn = null;
+        Connection myConn = null;
         Statement stmt = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-       try{
+        try{
            
             myConn = getConnection();
            
@@ -76,18 +78,46 @@ public class SurveyorDAO {
             ps.setString(5, surv.getAge());
             ps.setString(6, surv.getRole());          
             //execute query
-           int row  = ps.executeUpdate();
-         return row;
-       
-            
+            int row  = ps.executeUpdate();
+            return row;
 
         } finally {
-            
             close(myConn, stmt, rs);
         }
        
-   }
+    }
     
+    public List<Surveyor> fetchSurveyor() throws SQLException, Exception{
+        //list of admins to hold the values fetched from the database
+        List <Surveyor> surveyors = new ArrayList<>();
+        Connection myConn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        
+        try {
+            
+             // get a connection
+            myConn = getConnection();
+            // create sql statement
+            String sql = "SELECT * FROM surveyor";
+            stmt = myConn.createStatement();
+            rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                int id = rs.getInt("surv_id");
+                String name = rs.getString("name");
+                String email= rs.getString("email");
+                String role = rs.getString("role");
+                String phone = rs.getString ("phone");
+                String password = "Don't even try";
+                String age = rs.getString("age");
+               surveyors.add(new Surveyor(id, name, email, phone, age, role, password)); 
+            }
+           
+        } finally{
+             close(myConn, stmt, rs);
+        }
+        return surveyors;
+    }
     
     
     
