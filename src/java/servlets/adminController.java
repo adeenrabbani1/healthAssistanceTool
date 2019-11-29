@@ -101,8 +101,9 @@ public class adminController extends HttpServlet {
                     HttpSession session = request.getSession(true);
                     session.setAttribute("hospitals", hospitals);
                     session.setAttribute("surveyors", surveyors);
-                    RequestDispatcher rd = request.getRequestDispatcher("admin/dashboard.jsp");
-                    rd.forward(request, response);
+//                    RequestDispatcher rd = request.getRequestDispatcher("admin/dashboard.jsp");
+//                    rd.forward(request, response);
+                    response.sendRedirect("admin/dashboard.jsp");
                 } catch (Exception ex) {
                     Logger.getLogger(adminController.class.getName()).log(Level.SEVERE, null, ex);
                 }
