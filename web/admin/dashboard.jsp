@@ -98,20 +98,20 @@
                             </div>
                             <div class="modal-footer">
                                 <div class="row w-100">
-                                <div class="col-md-6 btn-group mb-1">
-                                    <select class="custom-select text-white h-100" style="background-color: #136384">
-                                        <option selected="" class="bg-secondary text-dark">Choose Surveyor</option>
-                                        <c:forEach items="${surveyors}" var="sur">
-                                            <option class="bg-secondary text-dark" value="1">${sur.getName()}</option>
-                                        </c:forEach>
-                                    </select>
-                                    <button type="button" class="btn btn-primary btn-md col-md-4"><i class="fa fa-code-fork" style="font-size: 1.1em" aria-hidden="true"></i> Assign</button>
-                                </div>
-                                <div class="col-md-6 btn-group mb-1">
-                                    <button type="submit" name="upd" class="btn btn-primary btn-md"><i class="fa fa-wrench" style="font-size: 1.1em" aria-hidden="true"></i> Update</button>
-                                    <button type="submit" name="del" class="btn btn-primary btn-md"><i class="fa fa-trash-o" style="font-size: 1.1em" aria-hidden="true"></i> Delete</button>
-                                    <button type="button" class="btn btn-primary btn-md" data-dismiss="modal"><i class="fa fa-times-circle"  style="font-size: 1.1em" aria-hidden="true"></i> Close</button>
-                                </div>
+                                    <div class="col-md-6 btn-group mb-1">
+                                        <select class="custom-select text-white h-100" style="background-color: #136384">
+                                            <option selected="" class="bg-secondary text-dark">Choose Surveyor</option>
+                                            <c:forEach items="${surveyors}" var="sur">
+                                                <option class="bg-secondary text-dark" value="1">${sur.getName()}</option>
+                                            </c:forEach>
+                                        </select>
+                                        <button type="button" class="btn btn-primary btn-md col-md-4"><i class="fa fa-code-fork" style="font-size: 1.1em" aria-hidden="true"></i> Assign</button>
+                                    </div>
+                                    <div class="col-md-6 btn-group mb-1">
+                                        <button type="submit" name="upd" class="btn btn-primary btn-md"><i class="fa fa-wrench" style="font-size: 1.1em" aria-hidden="true"></i> Update</button>
+                                        <button type="submit" name="del" class="btn btn-primary btn-md"><i class="fa fa-trash-o" style="font-size: 1.1em" aria-hidden="true"></i> Delete</button>
+                                        <button type="button" class="btn btn-primary btn-md" data-dismiss="modal"><i class="fa fa-times-circle"  style="font-size: 1.1em" aria-hidden="true"></i> Close</button>
+                                    </div>
                                 </div>
                             </div>  
                         </form>
