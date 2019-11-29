@@ -63,7 +63,10 @@ public class adminController extends HttpServlet {
         //IF THERE IS NO SESSION, SYSTEM MUST RENDER THE LOGIN PAGE!
 
         String command = (String) request.getAttribute("command");
-
+        
+        PrintWriter out = response.getWriter();
+        out.print("The command is "+ command);
+        
         if (command == null) {
             command = "HOME";
         }
@@ -92,6 +95,7 @@ public class adminController extends HttpServlet {
             case "adminDashboard":{
                 
                 try {
+                    System.out.println("servlets.adminController.doPost()");
                     List <Hospital> hospitals = new HospitalDAO().fetchHospital();
                     List <Surveyor> surveyors = new SurveyorDAO().fetchSurveyor();
                     HttpSession session = request.getSession(true);

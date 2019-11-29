@@ -102,12 +102,14 @@ public class loginControl extends HttpServlet {
                             HttpSession session = request.getSession(true);
                             session.setAttribute("admin", admin);
                             request.setAttribute("command", "adminDashboard");
+                        
                         }else if (rs.getString("role").equals("surveyor")) {
                             int idSer;
                             idSer = Integer.parseInt(rs.getString(id), 10);
                             Surveyor surveyor = new Surveyor(idSer, rs.getString("name"), rs.getString("email"), rs.getString("phone"), rs.getString("age"), rs.getString("role"), "Don't Even Try");
                             HttpSession session = request.getSession(true);
                             session.setAttribute("surveyor", surveyor);
+                            
                         }else if (rs.getString("role").equals("hospital")) {
                             int idHos;
                             idHos = Integer.parseInt(rs.getString(id), 10);
