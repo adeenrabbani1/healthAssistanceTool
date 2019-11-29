@@ -118,7 +118,6 @@ public class loginControl extends HttpServlet {
                             session.setAttribute("hospital", hospital);
                         }
                     }
-                    //response.sendRedirect(dashboard);
                 }
                 // Close all the connections 
                 con.close();
