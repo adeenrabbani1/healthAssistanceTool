@@ -102,6 +102,7 @@ public class loginControl extends HttpServlet {
                             HttpSession session = request.getSession(true);
                             session.setAttribute("user", admin);
                             request.setAttribute("command", "adminDashboard");
+                        
                         }else if (rs.getString("role").equals("surveyor")) {
                             int idSer;
                             idSer = Integer.parseInt(rs.getString(id), 10);
