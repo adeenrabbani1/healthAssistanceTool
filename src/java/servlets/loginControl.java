@@ -93,14 +93,14 @@ public class loginControl extends HttpServlet {
                     if (rs.next()) {
                         if (rs.getString("role").equals("admin")) {
                             int assign, addAdmin, addSyr, showRes, idAdmin;
-                            assign = rs.getString("can_assign").equals("1") ? 1 : 0;
-                            addAdmin = rs.getString("can_add_admin").equals("1") ? 1 : 0;
-                            addSyr = rs.getString("can_add_surveyor").equals("1") ? 1 : 0;
-                            showRes = rs.getString("can_view_result").equals("1") ? 1 : 0;
-                            idAdmin = Integer.parseInt(rs.getString(id),10);
+                            assign = rs.getInt("can_assign");
+                            addAdmin = rs.getInt("can_add_admin");
+                            addSyr = rs.getInt("can_add_surveyor");
+                            showRes = rs.getInt("can_view_result");
+                            idAdmin = rs.getInt(id);
                             Admin admin = new Admin(idAdmin, assign, addAdmin, addSyr, showRes, rs.getString("name"), rs.getString("email"), rs.getString("phone"), rs.getString("age"), rs.getString("role"), "Don't Even Try");
                             HttpSession session = request.getSession(true);
-                            session.setAttribute("admin", admin);
+                            session.setAttribute("user", admin);
                             request.setAttribute("command", "adminDashboard");
                         
                         }else if (rs.getString("role").equals("surveyor")) {
@@ -108,17 +108,15 @@ public class loginControl extends HttpServlet {
                             idSer = Integer.parseInt(rs.getString(id), 10);
                             Surveyor surveyor = new Surveyor(idSer, rs.getString("name"), rs.getString("email"), rs.getString("phone"), rs.getString("age"), rs.getString("role"), "Don't Even Try");
                             HttpSession session = request.getSession(true);
-                            session.setAttribute("surveyor", surveyor);
-                            request.setAttribute("command", "surveyorDashboard");
-                            
+                            session.setAttribute("user", surveyor);
                         }else if (rs.getString("role").equals("hospital")) {
                             int idHos;
                             idHos = Integer.parseInt(rs.getString(id), 10);
                             Hospital hospital = new Hospital(idHos, rs.getString("name"), rs.getString("phone"), rs.getString("license_num"), rs.getString("address"), rs.getString("country"), Integer.parseInt(rs.getString("num_of_beds"),10), 
-                                    Integer.parseInt(rs.getString("num_of_patients"),10), Integer.parseInt(rs.getString("num_of_out_patient"), 10), Integer.parseInt(rs.getString("num_of_in_patient"), 10), rs.getString("director_name"), 
-                                    rs.getString("director_email"), rs.getString("director_phone"));
+                            Integer.parseInt(rs.getString("num_of_patients"),10), Integer.parseInt(rs.getString("num_of_out_patient"), 10), Integer.parseInt(rs.getString("num_of_in_patient"), 10), rs.getString("director_name"), 
+                            rs.getString("director_email"), rs.getString("director_phone"));
                             HttpSession session = request.getSession(true);
-                            session.setAttribute("hospital", hospital);
+                            session.setAttribute("user", hospital);
                         }
                     }
                 }
