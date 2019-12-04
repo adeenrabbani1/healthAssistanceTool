@@ -15,7 +15,7 @@
  
 
 /*     brand Colors              */
-
+/*
 .card {
   font-size: .875rem;
 }
@@ -4939,7 +4939,7 @@ tbody.collapse.show {
   padding-right: 0;
   padding-left: 0;
   border-radius: 0;
-}
+}*/
 
 .alert {
   position: relative;
@@ -5080,7 +5080,7 @@ tbody.collapse.show {
 .alert-dark .alert-link {
   color: #040505;
 }
-
+/*
 @keyframes progress-bar-stripes {
   from {
     background-position: 1rem 0;
@@ -13241,7 +13241,7 @@ fieldset[disabled] .form-group .form-control {
 
 .off-canvas-sidebar .navbar.navbar-transparent {
   padding-top: 25px !important;
-}
+}*/
 
 .alert {
   border: 0;
@@ -13448,7 +13448,7 @@ fieldset[disabled] .form-group .form-control {
 .alert [data-notify="dismiss"] {
   margin-right: 5px;
 }
-
+/*
 .places-buttons .btn {
   margin-bottom: 30px;
 }
@@ -14243,8 +14243,6 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
   padding: 0.9375rem 0;
   text-align: center;
   display: -webkit-flex;
-  /* Safari */
-  /* Safari 6.1+ */
   display: flex;
 }
 
@@ -14879,7 +14877,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
     bottom: 13px;
   }
 }
-
+*/
 .fixed-plugin .dropdown .dropdown-menu {
   border-radius: 10px;
 }
@@ -15876,7 +15874,6 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 .fixed-plugin .dropdown-menu>li.adjustments-line>a {
   padding-right: 0;
   padding-left: 0;
-  /*border-bottom: 1px solid #ddd;*/
   border-radius: 0;
   margin: 0;
 }
@@ -16214,7 +16211,7 @@ label {
   font-weight: 400;
 }
 
-/*           Animations              */
+/*           Animations              
 
 .animation-transition-general,
 .sidebar .sidebar-wrapper>.nav [data-toggle="collapse"]~div>ul>li>a span,

@@ -25,12 +25,7 @@ public class Admin extends User {
         
     }
 
-    
-
-    
-    //contructor method!
-    
-
+ 
     public int getFlagCanAssign() {
         return flagCanAssign;
     }

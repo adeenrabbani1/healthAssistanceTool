@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package servlets;
+
 import entity.Surveyor;
 import DAO.SurveyorDAO;
 import DAO.AdminDAO;
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.jboss.weld.servlet.SessionHolder;
 
 /**
  *
@@ -44,6 +46,23 @@ public class adminController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        String command = (String) request.getAttribute("command");
+        HttpSession session = request.getSession(true);
+        if (session.getAttribute("user") != null) {
+            if (session.getAttribute("user").getClass().toString().equals("class entity.Admin")) {
+                if (request.getAttribute("command") == null) {
+                    command = (String) request.getParameter("command");
+                } else if (request.getParameter("command") == null) {
+                    command = (String) request.getAttribute("command");
+                } else {
+                    command = "HOME";
+                }
+            } else {
+                response.sendRedirect("");
+            }
+        } else {
+            response.sendRedirect("");
+        }
     }
 
     /**
@@ -61,60 +80,70 @@ public class adminController extends HttpServlet {
         //CHECH SESSION HERE IN THE SWITCH STATEMENT BEFORE SERVING 
         // THE PAGES TO THE USER.
         //IF THERE IS NO SESSION, SYSTEM MUST RENDER THE LOGIN PAGE!
-
-        String command = (String) request.getAttribute("command");
-
-        if (command == null) {
-            command = "HOME";
-        }
-
+        
+        String command = isAdmin(request, response);
+        
         switch (command) {
             //later add router that serves the page
             case "ADD-ADMIN": {
                 addAdmin(request, response);
                 break;
             }
-            
-            case "ADD-SURVEYOR":{
-                addSurveyor(request,response);
+            case "ADD-SURVEYOR": {
+                addSurveyor(request, response);
                 break;
             }
-            case "HOME":{
-                
+            case "HOME": {
                 //serve up the home page function here
                 break;
             }
-            case "VIEW-ADMINS":{
-                
-               // viewAdmins(request, response);
+            case "assign": {
+                assignHospital(request, response);
                 break;
             }
-            case "adminDashboard":{
-                
-                try {
-                    List <Hospital> hospitals = new HospitalDAO().fetchHospital();
-                    List <Surveyor> surveyors = new SurveyorDAO().fetchSurveyor();
-                    HttpSession session = request.getSession(true);
-                    session.setAttribute("hospitals", hospitals);
-                    session.setAttribute("surveyors", surveyors);
-//                    RequestDispatcher rd = request.getRequestDispatcher("admin/dashboard.jsp");
-//                    rd.forward(request, response);
-                    response.sendRedirect("admin/dashboard.jsp");
-                } catch (Exception ex) {
-                    Logger.getLogger(adminController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
+            case "delete": {
+                deleteHospital(request, response);
+                break;
+            }
+            case "update": {
+                updateHospitalAll(request, response);
+                break;
+            }
+            case "adminDashboard": {
+                viewDashboard(request, response);
                 break;
             }
         }
-        
+
+    }
+
+    private String isAdmin(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String command = null;
+        HttpSession session = request.getSession(true);
+        if (session.getAttribute("user") != null) {
+            if (session.getAttribute("user").getClass().toString().equals("class entity.Admin")) {
+                if (request.getAttribute("command") == null) {
+                    command = (String) request.getParameter("command");
+                } else if (request.getParameter("command") == null) {
+                    command = (String) request.getAttribute("command");
+                } else {
+                    command = "HOME";
+                }
+            } else {
+                response.sendRedirect("");
+            }
+        } else {
+            response.sendRedirect("/");
+        }
+        return command;
     }
 
     //do the admin registeration thing here
     private void addAdmin(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //admin dao obj to access the admin database.
-       
+
         AdminDAO admindb = new AdminDAO();
         PrintWriter out = response.getWriter();
         int id = Integer.parseInt(request.getParameter("admin_id"));
@@ -138,51 +167,131 @@ public class adminController extends HttpServlet {
         }
 
     }
+
+    //assign hospital
+    private void assignHospital(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            int i = 0;
+            String surID;
+            HttpSession session = request.getSession(true);
+            List<Hospital> hospitals = null;
+            hospitals = (List<Hospital>) session.getAttribute("hospitals");
+            for (; hospitals.size() > i; i++) {
+                if (request.getParameter("dirPhone").equals(hospitals.get(i).getDirectorPhone())) {
+                    break;
+                }
+            }
+            surID = request.getParameter("sur");
+
+            session.removeAttribute("hospitals");
+            hospitals = new HospitalDAO().fetchHospital();
+            session.setAttribute("hospitals", hospitals);
+            new HospitalDAO().updateHospital(hospitals.get(i), surID);
+            session.setAttribute("flash", "assigned");
+            response.sendRedirect("admin/dashboard.jsp");
+        } catch (Exception ex) {
+            Logger.getLogger(adminController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    //delete hospital
+    private void deleteHospital(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            int i = 0;
+            HttpSession session = request.getSession(true);
+            List<Hospital> hospitals = null;
+            hospitals = (List<Hospital>) session.getAttribute("hospitals");
+            for (; hospitals.size() > i; i++) {
+                if (request.getParameter("dirPhone").equals(hospitals.get(i).getDirectorPhone())) {
+                    break;
+                }
+            }
+            new HospitalDAO().deleteHospital(hospitals.get(i));
+            session.removeAttribute("hospitals");
+            hospitals = new HospitalDAO().fetchHospital();
+            session.setAttribute("hospitals", hospitals);
+            session.setAttribute("flash", "deleted");
+            response.sendRedirect("admin/dashboard.jsp");
+        } catch (Exception ex) {
+            Logger.getLogger(adminController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    //update Hospital
+    private void updateHospitalAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            int i = 0;
+            HttpSession session = request.getSession(true);
+            List<Hospital> hospitals = null;
+            hospitals = (List<Hospital>) session.getAttribute("hospitals");
+            for (; hospitals.size() > i; i++) {
+                if (request.getParameter("dirPhone").equals(hospitals.get(i).getDirectorPhone())) {
+                    break;
+                }
+            }
+
+            new HospitalDAO().updateHospitalAll(hospitals.get(i), request);
+            session.removeAttribute("hospitals");
+            hospitals = new HospitalDAO().fetchHospital();
+            session.setAttribute("hospitals", hospitals);
+            session.setAttribute("flash", "updated");
+            response.sendRedirect("admin/dashboard.jsp");
+        } catch (Exception ex) {
+            Logger.getLogger(adminController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    //view Dashboard
+    private void viewDashboard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            List<Hospital> hospitals = new HospitalDAO().fetchHospital();
+            List<Surveyor> surveyors = new SurveyorDAO().fetchSurveyor();
+            HttpSession session = request.getSession(true);
+            session.setAttribute("hospitals", hospitals);
+            session.setAttribute("surveyors", surveyors);
+            response.sendRedirect("admin/dashboard.jsp");
+        } catch (Exception ex) {
+            Logger.getLogger(adminController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     // Registering new sereyors!
-    
-    private void addSurveyor(HttpServletRequest request, HttpServletResponse response)throws ServletException,IOException {
-        
-        
+    private void addSurveyor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         //creating Surveyor DAO object to use the functionality!
         SurveyorDAO survdb = new SurveyorDAO();
         PrintWriter out = response.getWriter();
-          String name = (String) request.getParameter("name");
-          String email = (String) request.getParameter("email");
-          String phone = (String) request.getParameter("phone");
-          String password = (String) request.getParameter("password");
-          String age = request.getParameter("age");
-          
-          //new suveyor object
-          Surveyor surv = new Surveyor(0, name, email, phone, age,"surveyor", password);
-          surv.setRole("surveyor");
-          //pass to DAO
+        String name = (String) request.getParameter("name");
+        String email = (String) request.getParameter("email");
+        String phone = (String) request.getParameter("phone");
+        String password = (String) request.getParameter("password");
+        String age = request.getParameter("age");
+
+        //new suveyor object
+        Surveyor surv = new Surveyor(0, name, email, phone, age, "surveyor", password);
+        surv.setRole("surveyor");
+        //pass to DAO
         int row = 0;
         try {
             row = survdb.addSurveyor(surv);
         } catch (Exception ex) {
             Logger.getLogger(adminController.class.getName()).log(Level.SEVERE, null, ex);
         }
-         if(row > 0){
-             
-             out.println("data has been added");
-             
-         }
-          
-        
+        if (row > 0) {
+
+            out.println("data has been added");
+
+        }
+
     }
-    
-    
+
     //for viewing all the registered admins
-    
-    private void viewAdmins(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, Exception{
-        
-       AdminDAO admindb = new AdminDAO();
-       List<Admin> admins =  admindb.fetchAdmins();
-        
+    private void viewAdmins(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, Exception {
+
+        AdminDAO admindb = new AdminDAO();
+        List<Admin> admins = admindb.fetchAdmins();
+
     }
-    
-    
-    
 
     /**
      * Returns a short description of the servlet.
