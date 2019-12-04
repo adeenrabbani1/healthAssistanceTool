@@ -96,7 +96,7 @@ public class adminController extends HttpServlet {
                 
                 try {
                     System.out.println("servlets.adminController.doPost()");
-                    List <Hospital> hospitals = new HospitalDAO().fetchHospital();
+                    List <Hospital> hospitals = new HospitalDAO().fetchHospital(0);
                     List <Surveyor> surveyors = new SurveyorDAO().fetchSurveyor();
                     HttpSession session = request.getSession(true);
                     session.setAttribute("hospitals", hospitals);

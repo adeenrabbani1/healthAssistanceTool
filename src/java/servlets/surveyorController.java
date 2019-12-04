@@ -5,6 +5,8 @@
  */
 package servlets;
 
+import DAO.HospitalDAO;
+import entity.Hospital;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,6 +15,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import entity.Surveyor;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -30,24 +37,7 @@ public class surveyorController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet surveyorController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet surveyorController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-            Surveyor ser = (Surveyor) request.getSession().getAttribute("surveyor");
-            out.println(ser.getName());
-        }
-    }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -61,7 +51,10 @@ public class surveyorController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        
+        
+       
     }
 
     /**
@@ -75,7 +68,44 @@ public class surveyorController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        
+        String command = (String) request.getAttribute("command");
+//        PrintWriter out = response.getWriter();
+//        HttpSession session = request.getSession(true);
+//        Surveyor p = (Surveyor)session.getAttribute("serveyor");
+        
+//        out.print("The name is "+ p.getName());
+        
+        if(command == null){
+            command = "Home";
+        }
+        
+        switch (command){
+            case "Home":{
+                
+                break;
+            }
+            case "surveyorDashboard":{
+                
+                HttpSession session = request.getSession(true);
+               Surveyor s = (Surveyor) session.getAttribute("surveyor");
+               try{
+                 List <Hospital> hospitals = new HospitalDAO().fetchHospital(s.getSurv_id());
+                 request.setAttribute("surveyorHospitals", hospitals);
+               } catch(Exception e){
+                e.printStackTrace();
+               }
+               
+              RequestDispatcher rd = request.getRequestDispatcher("surveyor/dashboard.jsp");
+                    rd.forward(request, response);
+               
+                
+                
+                break;
+            }
+        }
+       
     }
 
     /**

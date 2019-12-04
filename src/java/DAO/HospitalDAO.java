@@ -107,7 +107,7 @@ public class HospitalDAO {
     }
       
     
-    public List<Hospital> fetchHospital() throws SQLException, Exception{
+    public List<Hospital> fetchHospital(int survID) throws SQLException, Exception{
         //list of admins to hold the values fetched from the database
         List <Hospital> hospitals = new ArrayList<>();
         Connection myConn = null;
@@ -118,7 +118,12 @@ public class HospitalDAO {
             //get a connection
             myConn = getConnection();
             //create sql statement
-            String sql = "SELECT * FROM hospital";
+            String sql = "";
+            if(survID == 0){
+                   sql = "SELECT * FROM hospital";
+            }else{
+                 sql = "SELECT * FROM hospital WHERE surveyor_id = '" + survID + "'";
+            }
             stmt = myConn.createStatement();
             rs = stmt.executeQuery(sql);
             while(rs.next()){
