@@ -37,8 +37,6 @@ public class surveyorController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -51,10 +49,31 @@ public class surveyorController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String command = isSurveyor(request, response);
+
+        // String s = (String)request.getParameter("hosp");
+        PrintWriter out = response.getWriter();
         
-        
-        
-       
+        if (command == null) {
+            command = "Home";
+        }
+
+        switch (command) {
+            case "Home": {
+
+                break;
+            }
+
+            case "SCORE": {
+
+                request.setAttribute("val", (String) request.getAttribute("hosp"));
+                RequestDispatcher rd = request.getRequestDispatcher("surveyor/surveyorScore.jsp");
+                rd.forward(request, response);
+
+                break;
+            }
+        }
+
     }
 
     /**
@@ -68,44 +87,67 @@ public class surveyorController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         
-        
-        String command = (String) request.getAttribute("command");
-//        PrintWriter out = response.getWriter();
+         String command = isSurveyor(request, response);
+        PrintWriter out = response.getWriter();
+
+        out.print("The id is " + command);
+
 //        HttpSession session = request.getSession(true);
 //        Surveyor p = (Surveyor)session.getAttribute("serveyor");
-        
 //        out.print("The name is "+ p.getName());
-        
-        if(command == null){
+        if (command == null) {
             command = "Home";
         }
-        
-        switch (command){
-            case "Home":{
-                
+
+        switch (command) {
+            case "Home": {
+
                 break;
             }
-            case "surveyorDashboard":{
-                
+            case "surveyorDashboard": {
+
                 HttpSession session = request.getSession(true);
-               Surveyor s = (Surveyor) session.getAttribute("surveyor");
-               try{
-                 List <Hospital> hospitals = new HospitalDAO().fetchHospital(s.getSurv_id());
-                 request.setAttribute("surveyorHospitals", hospitals);
-               } catch(Exception e){
-                e.printStackTrace();
-               }
-               
-              RequestDispatcher rd = request.getRequestDispatcher("surveyor/dashboard.jsp");
-                    rd.forward(request, response);
-               
-                
-                
+                Surveyor s = (Surveyor) session.getAttribute("user");
+                try {
+                    List<Hospital> hospitals = new HospitalDAO().fetchAssignedHospital(s.getSurv_id());
+                    request.setAttribute("surveyorHospitals", hospitals);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                RequestDispatcher rd = request.getRequestDispatcher("surveyor/dashboard.jsp");
+                rd.forward(request, response);
+
                 break;
             }
+
         }
-       
+
+    }
+
+    public String isSurveyor(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException{
+           String command = null;
+        HttpSession session = request.getSession(true);
+        if (session.getAttribute("user") != null) {
+            
+            if ((session.getAttribute("user").getClass().getName().equals("entity.Surveyor"))) {
+                if (request.getAttribute("command") == null) {
+                    command = (String) request.getParameter("command");
+                } else if (request.getParameter("command") == null) {
+                    command = (String) request.getAttribute("command");
+                } else {
+                    command = "HOME";
+                }
+            } else {
+                response.sendRedirect("");
+            }
+        } else {
+            response.sendRedirect("/");
+        }
+        return command;
     }
 
     /**

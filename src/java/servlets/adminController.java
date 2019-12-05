@@ -46,33 +46,17 @@ public class adminController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String command = (String) request.getAttribute("command");
-        HttpSession session = request.getSession(true);
-        if (session.getAttribute("user") != null) {
-            if (session.getAttribute("user").getClass().toString().equals("class entity.Admin")) {
-                if (request.getAttribute("command") == null) {
-                    command = (String) request.getParameter("command");
-                } else if (request.getParameter("command") == null) {
-                    command = (String) request.getAttribute("command");
-                } else {
-                    command = "HOME";
-                }
-            } else {
-                response.sendRedirect("");
-            }
-        } else {
-            response.sendRedirect("");
-        }
+        String command = isAdmin(request, response);
+        /**
+         * Handles the HTTP <code>POST</code> method.
+         *
+         * @param request servlet request
+         * @param response servlet response
+         * @throws ServletException if a servlet-specific error occurs
+         * @throws IOException if an I/O error occurs
+         */
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -80,9 +64,8 @@ public class adminController extends HttpServlet {
         //CHECH SESSION HERE IN THE SWITCH STATEMENT BEFORE SERVING 
         // THE PAGES TO THE USER.
         //IF THERE IS NO SESSION, SYSTEM MUST RENDER THE LOGIN PAGE!
-        
         String command = isAdmin(request, response);
-        
+
         switch (command) {
             //later add router that serves the page
             case "ADD-ADMIN": {

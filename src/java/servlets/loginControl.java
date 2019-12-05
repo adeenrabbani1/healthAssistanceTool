@@ -109,6 +109,7 @@ public class loginControl extends HttpServlet {
                             Surveyor surveyor = new Surveyor(idSer, rs.getString("name"), rs.getString("email"), rs.getString("phone"), rs.getString("age"), rs.getString("role"), "Don't Even Try");
                             HttpSession session = request.getSession(true);
                             session.setAttribute("user", surveyor);
+                            request.setAttribute("command", "surveyorDashboard");
                         }else if (rs.getString("role").equals("hospital")) {
                             int idHos;
                             idHos = Integer.parseInt(rs.getString(id), 10);

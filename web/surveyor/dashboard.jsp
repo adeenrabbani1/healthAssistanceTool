@@ -12,38 +12,38 @@
         <jsp:include page="../common/header.html"/>
     </head>
     <body style="background-color: #f5f5f5">
-        
-        
+
+
         <main role="main">
 
-      <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="jumbotron">
-        <div class="container">
-            <h1 class="display-3">Hello,</h1> <h2>${surveyor.getName()}</h2>
-          <p>Welcome to your dashboard. Please review your assigned Hospitals below! HAPPY SCORING!</p>
-          <p><a class="btn btn-danger" href="#" role="button"> View Profile&raquo;</a></p>
-        </div>
-      </div>
-    </main>
-        
-        
-        
-        
+            <!-- Main jumbotron for a primary marketing message or call to action -->
+            <div class="jumbotron">
+                <div class="container">
+                    <h1 class="display-3">Hello,</h1> <h2>${user.getName()}</h2>
+                    <p>Welcome to your dashboard. Please review your assigned Hospitals below! HAPPY SCORING!</p>
+                    <p><a class="btn btn-danger" href="#" role="button"> View Profile&raquo;</a></p>
+                </div>
+            </div>
+        </main>
+
+
+
+
 
         <c:if test="${empty surveyorHospitals}">
             <h1>You Dont have any Hospitals to Score! Have a chill time!</h1>
         </c:if>
         <div class="container-fluid">
             <div class="row mt-3 mb-3 justify-content-center">
-                <c:forEach items="${surveyorHospitals}" var="hospital">
-                    <div class="card text-dark bg-white m-3 border-dark" style="width: 20rem;">
-                        <div class="card-header bg-primary text-white"><i class="fa fa-hospital-o" style="font-size: 1.3em" aria-hidden="true"></i> ${festival.getName()}</div>
+                <c:forEach items="${surveyorHospitals}" var="festival">
+                    <div class="card text-white bg-primary border-primary m-3" style="max-width: 20rem; box-shadow: 0 4px 8px 4px rgba(0, 0, 0, 0.4); border-radius: 5px">
+                        <img style="height: 150px; width: 100%; display: block;" src="img/hos.png" alt="Card image">
                         <div class="card-body">
-                            <h4 class="card-title">${hospital.getCountry()}</h4>
-                            <p class="card-text">${hospital.getAddress()}, ${hospital.getPhone()}, ${hospital.getLicenseNum()}</p>
+                            <h4 class="card-title">${festival.getName()}, ${festival.getCountry()}</h4>
+                            <p class="card-text">${festival.getAddress()}, ${festival.getPhone()}, ${festival.getLicenseNum()}</p>
                         </div>
                         <div class="card-footer">
-                            <button type="button" class="btn btn-info col-md-12" style="background-color: #136384" data-toggle="modal" data-target="#model${hospital.getHospitalId()}">
+                            <button type="button" class="btn btn-info col-md-12" style="background-color: #136384" data-toggle="modal" data-target="#model${festival.getHospitalId()}">
                                 <i class="fa fa-info-circle" style="font-size: 1.1em" aria-hidden="true"></i> More Info
                             </button>
                         </div>
@@ -117,8 +117,16 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="col-md-6 btn-group mb-1">
-                            <button type="button" name="upd" style="background-color: #136384" class="btn btn-primary btn-md"><i class="fa fa-wrench" style="font-size: 1.1em" aria-hidden="true"></i> Score Hospital</button>
+                        <div class="col-md-6 btn-group mb-1 card-footer">
+                            
+                            <a href="surveyorController?hosp=${festival.getHospitalId()}&command=SCORE"style="background-color: #136384">
+                                <button type="button" name="upd" style="background-color: #136384" class="btn btn-primary btn-md">
+                                    <i class="fa fa-wrench" style="font-size: 1.1em" aria-hidden="true"></i> Score Hospital
+                                </button>
+                            </a>
+                            
+                            
+                            
 
                         </div>
                     </div>
