@@ -29,16 +29,19 @@ and open the template in the editor.
             <div class="collapse navbar-collapse" id="navbarColor02">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        <a class="btn btn-primary" href="../admin/dashboard.jsp">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
+                        <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Action
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Add Standard</a>
+                            <a class="dropdown-item" href="#">View Standard</a>
+                        </div>
+                        </div>
+                        <!--<a class="nav-link" href="../admin/standard.jsp">Standards </a>-->
                     </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0">

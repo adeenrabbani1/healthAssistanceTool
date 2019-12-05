@@ -30,6 +30,10 @@
                 <script>showNotification("<strong>Success!</strong> Hospital has been assigned.")</script>
                 <% session.removeAttribute("flash"); %>
             </c:when> 
+            <c:when test="${flash == 'addStd'}">
+                <script>showNotification("<strong>Success!</strong> Standard has been added.")</script>
+                <% session.removeAttribute("flash"); %>
+            </c:when>
         </c:choose>
     </body>
 </html>
