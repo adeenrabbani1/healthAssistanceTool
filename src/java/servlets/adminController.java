@@ -9,8 +9,10 @@ import entity.Surveyor;
 import DAO.SurveyorDAO;
 import DAO.AdminDAO;
 import DAO.HospitalDAO;
+import DAO.StandardDAO;
 import entity.Admin;
 import entity.Hospital;
+import entity.Standard;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
@@ -96,6 +98,10 @@ public class adminController extends HttpServlet {
                 viewDashboard(request, response);
                 break;
             }
+            case "addStand": {
+                addStandard(request, response);
+                break;
+            }
         }
 
     }
@@ -122,6 +128,31 @@ public class adminController extends HttpServlet {
         return command;
     }
 
+    //add standard
+    private void addStandard(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        //admin dao obj to access the admin database.
+        HttpSession session = request.getSession(true);
+        
+        StandardDAO stand = new StandardDAO();
+        String code = request.getParameter("code");
+        String title = request.getParameter("title");
+        String des = request.getParameter("des");
+        String category = request.getParameter("category");
+        String domain = request.getParameter("domain");
+
+        Standard std = new Standard(0, code, des, title, category, domain);
+
+        try {
+            stand.addStandard(std);
+            session.setAttribute("flash", "addStd");
+            response.sendRedirect("admin/standard.jsp");
+        } catch (Exception ex) {
+            Logger.getLogger(adminController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     //do the admin registeration thing here
     private void addAdmin(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -144,7 +175,6 @@ public class adminController extends HttpServlet {
 
         try {
             Admin add = admindb.addAdmin(newAdmin);
-
         } catch (Exception ex) {
             Logger.getLogger(adminController.class.getName()).log(Level.SEVERE, null, ex);
         }
