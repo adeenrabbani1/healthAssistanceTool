@@ -4,10 +4,6 @@
  * and open the template in the editor.
  */
 
-$(document).ready(function () {
-  
-});
-
 function showNotification(message) {
 
     $.notify({
@@ -23,3 +19,14 @@ function showNotification(message) {
         }
     });
 }
+
+$(document).ready(function () {
+    $("#addbtn").click(function () {
+        $("#list").toggle("slow");
+    });
+    
+    $("#listbtn").click(function () {
+        $("#add").toggle("slow");
+    });
+});
+

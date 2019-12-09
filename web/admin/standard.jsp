@@ -24,24 +24,31 @@
     </head>
     <body style="background-color: #f5f5f5">
         <div class="container-fluid">
-<!--            <div class="mt-5 mb-3 text-center">
-                <h1><small>Hello</small> ${user.getName()}</h1>
-                <hr>
-                
-            </div>-->
+            <!--            <div class="mt-5 mb-3 text-center">
+                            <h1><small>Hello</small> ${user.getName()}</h1>
+                            <hr>
+                            
+                        </div>-->
             <jsp:include page="../common/errorFlash.jsp"/>
             <div class="row mt-3 mb-3 justify-content-center">
-                <div class="col mb-4">
-                    <div class="card text-white bg-primary border-primary m-3" style="box-shadow: 0 4px 8px 4px rgba(0, 0, 0, 0.4); border-radius: 5px">
-                        <img src="https://pngimage.net/wp-content/uploads/2018/06/standard-png-5.png" class="card-img" alt="...">
+                <div class="col m-3" id="add">
+                    <div class="card text-white bg-primary border-primary" style="box-shadow: 0 4px 8px 4px rgba(0, 0, 0, 0.4); border-radius: 5px">
+                        <!--<img src="https://pngimage.net/wp-content/uploads/2018/06/standard-png-5.png" class="card-img" alt="...">-->
+                        <div class="card-header">
+
+                            <button type="button" class="close text-white" id="addbtn">
+                                <i class="fa fa-window-maximize" aria-hidden="true"></i>
+                            </button>
+
+                            <h1 class="text-center mt-2 text-white"><i class="fa fa-plus" aria-hidden="true"></i> Add Standard</h1>
+                        </div>
                         <div class="card-body">
-                            <h5 class="card-title"></h5>
                             <p class="card-text">
                             <form action="../adminController" method="post">
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="title">Title</label>
-                                        <input type="text" class="form-control" id="title" name="title" placeholder="eg Waste management">
+                                        <input type="text" class="form-control" id="title" name="title" placeholder="eg Waste management" required>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="code">Code</label>
@@ -50,13 +57,13 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="des">Description</label>
-                                    <input type="text" class="form-control" id="des" name="des" placeholder="eg All hospital staff are provided with a patient safety...">
+                                    <input type="text" class="form-control" id="des" name="des" placeholder="eg All hospital staff are provided with a patient safety..." required>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="category">Category</label>
-                                        <select id="category" class="form-control" name="category">
-                                            <option selected>Choose...</option>
+                                        <select id="category" class="form-control" name="category" required>
+                                            <option selected hidden>Choose...</option>
                                             <option>Critical</option>
                                             <option>Core</option>
                                             <option>Development</option>
@@ -64,8 +71,8 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="domain">Domain</label>
-                                        <select id="domain" class="form-control" name="domain">
-                                            <option selected>Choose...</option>
+                                        <select id="domain" class="form-control" name="domain" required>
+                                            <option selected hidden>Choose...</option>
                                             <option value="leadership Management">leadership Management</option>
                                             <option value="Patient Public Involvement">Patient Public Involvement</option>
                                             <option value="Safe Evidence Based Practice">Safe Evidence Based Practice</option>
@@ -74,9 +81,49 @@
                                         </select>
                                     </div>
                                 </div>
-                                <button type="submit" name="command" value="addStand" class="btn btn-warning">Add Standard</button>
                             </form>
                             </p>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" name="command" value="addStand" class="btn btn-warning">Add Standard</button> 
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col m-3" id="list">
+                    <div class="card text-white bg-primary border-primary" style="box-shadow: 0 4px 8px 4px rgba(0, 0, 0, 0.4); border-radius: 5px;">
+                        <!--<img src="https://pngimage.net/wp-content/uploads/2018/06/standard-png-5.png" class="card-img" alt="...">-->
+                        <div class="card-header">
+                            <button type="button" class="close text-white" id="listbtn">
+                                <i class="fa fa-window-maximize" aria-hidden="true"></i>
+                            </button>
+
+                            <h1 class="text-center mt-2 text-white"><i class="fa fa-list" aria-hidden="true"></i> List Standard</h1>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr class="text-info text-center">
+                                        <th scope="col">Code</th>
+                                        <th scope="col">Domain</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${standards}" var="festival">
+                                        <tr class="text-warning" data-toggle="modal" data-target="#model${festival.getId()}">
+                                            <td>${festival.getCode()}</td>
+                                            <td>${festival.getDomain()}</td>
+                                            <td>${festival.getCategory()}</td>
+                                            <td>${festival.getTitle()}</td>
+                                            <td>${festival.getDescription()}</td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table> 
                         </div>
                     </div>
                 </div>
@@ -84,3 +131,60 @@
         </div>
     </body>
 </html> 
+
+
+<c:forEach items="${standards}" var="festival">
+    <div class="modal fade" id="model${festival.getId()}">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content border-danger" style="background-color: #000005; border-radius: 15px">
+                <div class="modal-header">
+                    <h4 class="modal-title text-white pl-4">Standard Code: ${festival.getCode()}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="../adminController" method="post">
+                    <div class="modal-body row pl-5 pr-5" style="font-weight: bold">
+                        <div class="col-md-12 text-info">
+                            <h3 class="text-white">Standard Details</h3>
+                            <p>
+                            <div class="form-group">
+                                <label class="col-form-label col-form-label-sm" for="inputDefault">Standard Code:</label>
+                                <input type="text" class="form-control form-control-sm" value="${festival.getCode()}" 
+                                       placeholder="Standard Code" id="inputDefault" name="code">
+
+                                <label class="col-form-label col-form-label-sm" for="inputDefault1">Standard Type:</label>
+                                <input type="text" class="form-control form-control-sm" value="${festival.getDomain()}" 
+                                       placeholder="Standard Type" id="inputDefault1" name="domain">
+
+                                <label class="col-form-label col-form-label-sm" for="inputDefault2">Standard Category:</label>
+                                <input type="text" class="form-control form-control-sm" value="${festival.getCategory()}" 
+                                       placeholder="Standard Category" id="inputDefault2" name="category">
+
+                                <label class="col-form-label col-form-label-sm" for="inputDefault3">Standard Title:</label>
+                                <input type="text" class="form-control form-control-sm" value="${festival.getTitle()}" 
+                                       placeholder="Standard Title" id="inputDefault3" name="title">
+
+                                <label class="col-form-label col-form-label-sm" for="inputDefault3">Standard Description:</label>
+                                <input type="text" class="form-control form-control-sm" value="${festival.getDescription()}" 
+                                       placeholder="Standard Description" id="inputDefault3" name="des">
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row w-100">
+                            <div class="col-md-6 btn-group mb-1">
+                                <button type="submit" name="command" value="update" class="btn btn-primary btn-md"><i class="fa fa-wrench" style="font-size: 1.1em" aria-hidden="true"></i> Update</button>
+                                <button type="submit" name="command" value="delete" class="btn btn-primary btn-md"><i class="fa fa-trash-o" style="font-size: 1.1em" aria-hidden="true"></i> Delete</button>
+                            </div>
+                            <div class="col-md-6 btn-group mb-1">
+                                <button type="button" class="btn btn-primary btn-md" data-dismiss="modal"><i class="fa fa-times-circle"  style="font-size: 1.1em" aria-hidden="true"></i> Close</button>
+                            </div>
+                        </div>
+                    </div>  
+                </form>
+            </div>
+        </div>
+    </div>
+</c:forEach>

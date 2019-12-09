@@ -25,11 +25,9 @@ import javax.servlet.http.HttpServletRequest;
 public class StandardDAO {
 
     //for database purpose.
-
     private String url, use, password;
 
     //mehtod for closing a jdbc connection!
-
     private void close(Connection myConn, Statement myStmt, ResultSet myRs) {
 
         try {
@@ -90,6 +88,100 @@ public class StandardDAO {
         } finally {
             close(myConn, stmt, rs);
         }
+    }
+
+    public List<Standard> fetchStandards() throws Exception {
+        Connection myConn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        List<Standard> std = new ArrayList<Standard>();
+        try {
+            // get a connection
+            myConn = getConnection();
+            //create sql statement
+            String sql = "Select * FROM standards";
+            // create prepared statement
+            stmt = myConn.createStatement();
+            rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+
+                int id = rs.getInt("id");
+                String code = rs.getString("code");
+                String category = rs.getString("category");
+                String domain = rs.getString("domain");
+                String description = rs.getString("text");
+                String title = rs.getString("header");
+
+                std.add(new Standard(id, code, description, title, category, domain));
+            }
+
+        } finally {
+            close(myConn, stmt, rs);
+        }
+
+        return std; // returning the list of standards!!
+
+    }
+    
+    public void deleteStandard(Standard std) throws Exception {
+
+        Connection myConn = null;
+        Statement stmt = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            // get a connection
+            myConn = getConnection();
+            // create sql statement
+            String sql = "delete from standards where code = ?";
+            // create prepared statement
+            stmt = myConn.createStatement();
+            ps = myConn.prepareStatement(sql);
+            // set params
+            ps.setString(1, std.getCode());
+
+            //execute query
+            ps.executeUpdate();
+
+        } finally {
+
+            close(myConn, stmt, rs);
+        }
+
+    }
+    
+    public void updateStandard(Standard std, String code) throws Exception {
+
+        Connection myConn = null;
+        Statement stmt = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            // get a connection
+            myConn = getConnection();
+            // create sql statement
+            String sql = "UPDATE standards SET code = ?,domain = ?,category = ?,text = ?,header = ? where code = ?";
+            // create prepared statement
+            stmt = myConn.createStatement();
+            ps = myConn.prepareStatement(sql);
+            // set params
+            ps.setString(1, std.getCode());
+            ps.setString(2, std.getDomain());
+            ps.setString(3, std.getCategory());
+            ps.setString(4, std.getDescription());
+            ps.setString(5, std.getTitle());
+            ps.setString(6, code);
+            
+            //execute query
+            ps.executeUpdate();
+
+        } finally {
+
+            close(myConn, stmt, rs);
+        }
+
     }
 
 }

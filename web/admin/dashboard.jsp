@@ -60,7 +60,7 @@
         <c:forEach items="${hospitals}" var="festival">
             <div class="modal fade" id="model${festival.getHospitalId()}">
                 <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-                    <div class="modal-content" style="background-color: #000005">
+                    <div class="modal-content border-danger" style="background-color: #000005; border-radius: 15px">
                         <div class="modal-header">
                             <h4 class="modal-title text-white pl-4">Hospital Name: ${festival.getName()}</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">

@@ -118,6 +118,14 @@ public class adminController extends HttpServlet {
                 addStandard(request, response);
                 break;
             }
+            case "deleteStand": {
+                deleteStandard(request, response);
+                break;
+            }
+            case "updateStand": {
+                updateStandard(request, response);
+                break;
+            }
         }
 
     }
@@ -149,7 +157,7 @@ public class adminController extends HttpServlet {
             throws ServletException, IOException {
         //admin dao obj to access the admin database.
         HttpSession session = request.getSession(true);
-        
+
         StandardDAO stand = new StandardDAO();
         String code = request.getParameter("code");
         String title = request.getParameter("title");
@@ -167,6 +175,62 @@ public class adminController extends HttpServlet {
             Logger.getLogger(adminController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    private void deleteStandard(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        //admin dao obj to access the admin database.
+        HttpSession session = request.getSession(true);
+
+        StandardDAO stand = new StandardDAO();
+        String code = request.getParameter("code");
+        String title = request.getParameter("title");
+        String des = request.getParameter("des");
+        String category = request.getParameter("category");
+        String domain = request.getParameter("domain");
+
+        Standard std = new Standard(0, code, des, title, category, domain);
+
+        try {
+            stand.addStandard(std);
+            session.setAttribute("flash", "addStd");
+            response.sendRedirect("admin/standard.jsp");
+        } catch (Exception ex) {
+            Logger.getLogger(adminController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void updateStandard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            int i = 0;
+            HttpSession session = request.getSession(true);
+            List<Standard> standards = null;
+            standards = (List<Standard>) session.getAttribute("standards");
+            
+            String code = request.getParameter("code");
+            String title = request.getParameter("title");
+            String des = request.getParameter("des");
+            String category = request.getParameter("category");
+            String domain = request.getParameter("domain");
+
+            Standard std = new Standard(0, code, des, title, category, domain);
+
+            for (; standards.size() > i; i++) {
+                if (request.getParameter("code").equals(standards.get(i).getCode())) {
+                    break;
+                }
+            }
+
+            new StandardDAO().updateStandard(std, standards.get(i).getCode());
+            session.removeAttribute("standards");
+            standards = new StandardDAO().fetchStandards();
+            session.setAttribute("standards", standards);
+            session.setAttribute("flash", "updated");
+            response.sendRedirect("admin/dashboard.jsp");
+        } catch (Exception ex) {
+            Logger.getLogger(adminController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     //do the admin registeration thing here
@@ -275,9 +339,11 @@ public class adminController extends HttpServlet {
         try {
             List<Hospital> hospitals = new HospitalDAO().fetchHospital();
             List<Surveyor> surveyors = new SurveyorDAO().fetchSurveyor();
+            List<Standard> standards = new StandardDAO().fetchStandards();
             HttpSession session = request.getSession(true);
             session.setAttribute("hospitals", hospitals);
             session.setAttribute("surveyors", surveyors);
+            session.setAttribute("standards", standards);
             response.sendRedirect("admin/dashboard.jsp");
         } catch (Exception ex) {
             Logger.getLogger(adminController.class.getName()).log(Level.SEVERE, null, ex);
