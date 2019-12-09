@@ -7,6 +7,8 @@ package servlets;
 
 import DAO.HospitalDAO;
 import entity.Hospital;
+import entity.Standard;
+import DAO.StandardDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -67,6 +69,16 @@ public class surveyorController extends HttpServlet {
             case "SCORE": {
 
                 request.setAttribute("val", (String) request.getAttribute("hosp"));
+                
+            try {
+                List<Standard> standards = new StandardDAO().fetchStandards();
+                out.print(standards);
+                request.setAttribute("values",standards );
+            } catch (Exception ex) {
+                Logger.getLogger(surveyorController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                
+                
                 RequestDispatcher rd = request.getRequestDispatcher("surveyor/surveyorScore.jsp");
                 rd.forward(request, response);
 

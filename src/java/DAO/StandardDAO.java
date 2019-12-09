@@ -91,5 +91,45 @@ public class StandardDAO {
             close(myConn, stmt, rs);
         }
     }
+    
+    public List<Standard> fetchStandards() throws Exception{
+         Connection myConn = null;
+        Statement stmt = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List <Standard> std = new ArrayList<Standard>();
+         try {
+            // get a connection
+            myConn = getConnection();
+            //create sql statement
+            String sql = "Select * FROM standards";
+            // create prepared statement
+            stmt = myConn.createStatement();
+            rs = stmt.executeQuery(sql);
+            while (rs.next()){
+                
+                int id = rs.getInt("id");
+                String code = rs.getString("code");
+                String category = rs.getString("category");
+                String domain = rs.getString("domain");
+                String description  = rs.getString("description");
+                String title = rs.getString("title");
+                
+                Standard temp = new Standard(id, code,description,title,category, domain);
+                
+                std.add(temp);
+            } 
+                     
+           }
+        
+          
+         finally {
+            close(myConn, stmt, rs);
+        }
+         
+         return std; // returning the list of standards!!
 
-}
+    }
+   }
+
+

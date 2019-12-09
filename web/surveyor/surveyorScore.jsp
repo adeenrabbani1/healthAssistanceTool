@@ -15,33 +15,83 @@
         <title>JSP Page</title>
         <jsp:include page="../common/header.html"/>
     </head>
+
+    <style type="text/css"> 
+        input[type="radio"]{margin: 10px 0}; 
+    </style>
     <body >
-        
+
         <h1 class="text-center" style="margin-top: 1%" >Hospital Score Board</h1>  <br>
         <p class="text-center" style="color:crimson;">Please score the standards of the Hospital below and save accordingly!</p>
+
+
+        <div class="cl">
+            <c:forEach items="${values}" var="value">
+
+                <div id="${value.id}" class="cl card text-center  " style="margin-top: 2%" >
+
+                    <div class="card-body cards " style="background-color: whitesmoke" >
+                        <h1 class="card-title" style="text-decoration: underline">${value.getCode()} - ${value.getTitle()}</h1>
+                        <c:if test="${value.getCategory() =='Critical'}">
+                            <div class="mt-auto text-center"><span class="badge badge-pill badge-danger text-center">${value.getCategory()}</span></div>  
+                            </c:if>
+                            <c:if test="${value.getCategory() =='Development'}">
+                            <div class="mt-auto text-center"><span class="badge badge-pill  badge-primary text-center" style="background-color: blue">${value.getCategory()}</span></div>  
+                            </c:if>
+                            <c:if test="${value.getCategory() =='Core'}">
+                            <div class="mt-auto text-center"><span class="badge badge-pill  badge-primary text-center" style="background-color: slateblue">${value.getCategory()}</span></div>  
+                            </c:if>
+                        <p style="font-size: 20px" class="card-text text-left" >${value.getDescription()}.</p>
+                        <h4>Score</h4>
+                        <label class="radio-inline"><input style="margin-right: 20px" type="radio" name="optradio" checked>0%</label>
+                        <label class="radio-inline"><input style="margin-right: 20px"  type="radio" name="optradio">25%</label>
+                        <label class="radio-inline"><input style="margin-right: 20px"  type="radio" name="optradio">50%</label>
+                        <label class="radio-inline"><input style="margin-right: 20px"  type="radio" name="optradio">75%</label>
+                        <label class="radio-inline"><input type="radio" name="optradio">100</label>
+                        <button id="${value.id}" onclick="loadPrev(this.id)" class="btn btn-warning float-left" >Previous</button>
+                        <button id="${value.id}" onclick="loadNext(this.id)" class="btn btn-success float-right" >Next</button>
+                    </div>
+                </div>
+
+            </c:forEach>
             
-        <h1> The id is ${val}</h1>
-        
-        <div class="card text-center" style="margin-top: 2%">
-            <div class="card-header">
-                <ul class="nav nav-pills card-header-pills">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Active</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-danger float-left" >Previous</a>
-                <a href="#" class="btn btn-success float-right" >Next</a>
-            </div>
+            <button style="margin-top: 15px"  class="text-center btn btn-success float-right" >Save Draft</button>
         </div>
     </body>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var elem = document.getElementsByClassName('cl');
+            console.log(elem.length)
+            for (var i = 2; i < elem.length; i++) {
+                $(elem[i]).hide();
+                console.log("asdfasdfasdfasd");
+            }
+        })
+        function loadNext(val, e) {
+            var elem = document.getElementsByClassName('cl');
+            if ($(elem[parseInt(val)]).next().length) {
+                $(elem[parseInt(val)]).hide("fast");
+                $(elem[parseInt(val)]).next().show("fast");
+            } else {
+
+                alert("This was the last standard to Score! Enough already surveyor. GO SLEEP ");
+                e.preventDefault();
+            }
+
+        }
+        function loadPrev(val, e) {
+            var elem = document.getElementsByClassName('cl');
+            if ($(elem[parseInt(val)]).prev().length) {
+                $(elem[parseInt(val)]).hide('fast');
+                $(elem[parseInt(val)]).prev().show('fast');
+            } else {
+                alert("No more Elements! ");
+                e.preventDefault();
+            }
+        }
+
+    </script>
+
 </html>
