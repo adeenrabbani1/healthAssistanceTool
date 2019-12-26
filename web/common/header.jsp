@@ -37,13 +37,24 @@
 
                 <div class="collapse navbar-collapse" id="navbarColor02">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="../admin/dashboard.jsp">Home <span class="sr-only">(current)</span></a>
+                        <li class="nav-item dropdown active">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                                <i class="fa fa-area-chart" style="font-size: 15px"></i> Dashboard
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="../admin/dashboard.jsp"><i class="fa fa-calendar-o" style="font-size:15px"></i> All Hospitals</a>
+                                <a class="dropdown-item" href="../admin/assignedHospitals.jsp"><i class="fa fa-calendar-check-o" style="font-size:15px"></i> Assigned Hospitals</a>
+                                <a class="dropdown-item" href="../admin/unassignedHospitals.jsp"><i class="fa fa-calendar-minus-o" style="font-size:15px"></i> Unassigned Hospitals</a>
+                            </div>
                         </li>
+
                         <li class="nav-item active">
-                            <a class="nav-link" href="../admin/standard.jsp">Standards </a>
+                            <a class="nav-link" href="../admin/standard.jsp"><i class="fa fa-stack-overflow" aria-hidden="true" style="font-size: 15px"></i> Standards</a>
                         </li>
                     </ul>
+                    <div class="form-inline my-2 my-lg-0">
+                        <a class="nav-link  text-white" href="../logoutControl"><i class="fa fa-sign-out" aria-hidden="true" style="font-size: 15px"></i> Logout</a>
+                    </div>
                 </div>
             </nav>
         </c:if>
