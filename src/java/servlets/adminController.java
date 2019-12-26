@@ -347,7 +347,7 @@ public class adminController extends HttpServlet {
         String age = request.getParameter("age");
 
         //new suveyor object
-        Surveyor surv = new Surveyor(0, name, email, phone, age, "surveyor", password);
+        Surveyor surv = new Surveyor(0, name, email, phone, age, "surveyor", password,"active");
         surv.setRole("surveyor");
         //pass to DAO
         int row = 0;

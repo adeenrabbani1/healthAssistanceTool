@@ -70,4 +70,11 @@ public class Standard {
     public String getTitle() {
         return title;
     }
+
+    @Override
+    public String toString() {
+        return "Standard{" + "id=" + id + ", code=" + code + ", description=" + description + ", title=" + title + ", category=" + category + ", domain=" + domain + '}';
+    }
+    
+    
 }

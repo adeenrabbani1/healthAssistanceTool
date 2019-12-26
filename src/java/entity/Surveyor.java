@@ -11,9 +11,19 @@ package entity;
  */
 public class Surveyor extends User{
      private int surv_id;
-      public Surveyor(int survId,String name, String email, String phone, String age, String role, String password){
+     private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+      public Surveyor(int survId,String name, String email, String phone, String age, String role, String password, String status){
           super(name, email, phone,role, age, password);
           this.surv_id = survId;
+          this.status = status;
       }
 
       //this id is only used to hold the id after databse get query!

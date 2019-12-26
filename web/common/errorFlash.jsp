@@ -34,6 +34,14 @@
                 <script>showNotification("<strong>Success!</strong> Standard has been added.")</script>
                 <% session.removeAttribute("flash"); %>
             </c:when>
+            <c:when test="${flash == 'scored'}">
+                <script>showNotification("<strong>Success!</strong> Your Scores Have been saved Successfully")</script>
+                <% session.removeAttribute("flash"); %>
+            </c:when> 
+            <c:when test="${flash == 'status'}">
+                <script>showNotification("<strong>Success!</strong> Your account is now deactivated! Hospitals cannot be assigned to you..")</script>
+                <% session.removeAttribute("flash");%>
+            </c:when>
         </c:choose>
     </body>
 </html>

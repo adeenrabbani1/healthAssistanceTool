@@ -20,7 +20,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <jsp:include page="../common/header.html"/>
+        <jsp:include page="../common/header.jsp"/>
     </head>
     <body style="background-color: #f5f5f5">
         <div class="container-fluid">

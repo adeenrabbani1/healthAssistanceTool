@@ -98,7 +98,7 @@ public class loginControl extends HttpServlet {
                             addSyr = rs.getInt("can_add_surveyor");
                             showRes = rs.getInt("can_view_result");
                             idAdmin = rs.getInt(id);
-                            Admin admin = new Admin(idAdmin, assign, addAdmin, addSyr, showRes, rs.getString("name"), rs.getString("email"), rs.getString("phone"), rs.getString("age"), rs.getString("role"), "Don't Even Try");
+                            Admin admin = new Admin(idAdmin, assign, addAdmin, addSyr, showRes, rs.getString("name"), rs.getString("email"), rs.getString("phone"), rs.getString("role"), rs.getString("age"), "Don't Even Try");
                             HttpSession session = request.getSession(true);
                             session.setAttribute("user", admin);
                             request.setAttribute("command", "adminDashboard");
@@ -106,7 +106,7 @@ public class loginControl extends HttpServlet {
                         }else if (rs.getString("role").equals("surveyor")) {
                             int idSer;
                             idSer = Integer.parseInt(rs.getString(id), 10);
-                            Surveyor surveyor = new Surveyor(idSer, rs.getString("name"), rs.getString("email"), rs.getString("phone"), rs.getString("age"), rs.getString("role"), "Don't Even Try");
+                            Surveyor surveyor = new Surveyor(idSer, rs.getString("name"), rs.getString("email"), rs.getString("phone"), rs.getString("age"), rs.getString("role"), "Don't Even Try", rs.getString("status"));
                             HttpSession session = request.getSession(true);
                             session.setAttribute("user", surveyor);
                             request.setAttribute("command", "surveyorDashboard");

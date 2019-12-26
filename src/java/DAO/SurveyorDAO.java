@@ -51,6 +51,73 @@ public class SurveyorDAO {
         
     }
     
+    //function that changes the status of the surveyor
+    
+    public void changeStatus(int sid, String status) throws Exception
+    {
+        
+        Connection myConn = null;
+        Statement stmt = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try{
+           
+            myConn = getConnection();
+            String sql;
+            if(status.equals("active")){
+             sql = "UPDATE surveyor SET status= 'deactive' WHERE surv_id = '" + sid+ "'";
+            }else
+            {
+                  sql = "UPDATE surveyor SET status= 'active' WHERE surv_id = '" + sid+ "'";
+            }
+            // create prepared statement
+            stmt = myConn.createStatement();
+             ps = myConn.prepareStatement(sql);
+            ps.executeUpdate();
+           
+
+        } finally {
+            close(myConn, stmt, rs);
+        }
+    }
+    
+    //only fetching the surveyor for updating the session
+   public Surveyor fetchSurv() throws Exception{
+       
+       Surveyor s = null;
+       Connection myConn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        
+        try {
+            
+             // get a connection
+            myConn = getConnection();
+            // create sql statement
+            String sql = "SELECT * FROM surveyor";
+            stmt = myConn.createStatement();
+            rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                int id = rs.getInt("surv_id");
+                String name = rs.getString("name");
+                String email= rs.getString("email");
+                String role = rs.getString("role");
+                String phone = rs.getString ("phone");
+                String password = "Don't even try";
+                String age = rs.getString("age");
+                String status = rs.getString("status");
+               s = new Surveyor(id, name, email, phone, age, role, password, status);
+            }
+           
+        } finally{
+             close(myConn, stmt, rs);
+        }
+        return s;
+    
+   }
+    
+    
     public int addSurveyor(Surveyor surv) throws Exception{
        
        
@@ -64,10 +131,10 @@ public class SurveyorDAO {
             myConn = getConnection();
            
             String sql = "insert into surveyor "
-                        + "(name,email,password,phone,age,role) "
-                        + "values (?,?,?,?,?,?)";
+                        + "(name,email,password,phone,age,role,status)"
+                        + "values (?,?,?,?,?,?,?)";
             // create prepared statement
-            stmt = myConn.createStatement();
+           // stmt = myConn.createStatement();
 
             ps = myConn.prepareStatement(sql);
             // set params
@@ -76,7 +143,8 @@ public class SurveyorDAO {
             ps.setString(3, surv.getPassword());
             ps.setString(4, surv.getPhone());
             ps.setString(5, surv.getAge());
-            ps.setString(6, surv.getRole());          
+            ps.setString(6, surv.getRole());
+            ps.setString(7, surv.getStatus());
             //execute query
             int row  = ps.executeUpdate();
             return row;
@@ -86,6 +154,8 @@ public class SurveyorDAO {
         }
        
     }
+    
+    // Later have to add a method that only fetches the surveyorss that are active!
     
     public List<Surveyor> fetchSurveyor() throws SQLException, Exception{
         //list of admins to hold the values fetched from the database
@@ -110,7 +180,8 @@ public class SurveyorDAO {
                 String phone = rs.getString ("phone");
                 String password = "Don't even try";
                 String age = rs.getString("age");
-               surveyors.add(new Surveyor(id, name, email, phone, age, role, password)); 
+                String status = rs.getString("status");
+               surveyors.add(new Surveyor(id, name, email, phone, age, role, password,status)); 
             }
            
         } finally{
