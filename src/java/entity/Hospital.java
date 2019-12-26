@@ -28,6 +28,7 @@ public class Hospital {
     private String directorName;
     private String directorEmail;
     private String directorPhone;
+    private int surID;
     //constructor for setting all the values for the hostpital
 
     public Hospital(int hospitalId, String name, String phone, String licenseNum, String address, String country, int numOfBeds, int numOfPatients, int numOfOutPatient, int numOfInPatient, String directorName, String directorEmail, String directorPhone) {
@@ -47,6 +48,25 @@ public class Hospital {
         this.directorEmail = directorEmail;
         this.directorPhone = directorPhone;
     }
+
+    public Hospital(int hospitalId, String name, String phone, String licenseNum, String address, String country, int numOfBeds, int numOfPatients, int numOfOutPatient, int numOfInPatient, String directorName, String directorEmail, String directorPhone, int surID) {
+        this.hospitalId = hospitalId;
+        this.name = name;
+        this.phone = phone;
+        this.licenseNum = licenseNum;
+        this.address = address;
+        this.country = country;
+        this.numOfBeds = numOfBeds;
+        this.numOfPatients = numOfPatients;
+        this.numOfOutPatient = numOfOutPatient;
+        this.numOfInPatient = numOfInPatient;
+        this.directorName = directorName;
+        this.directorEmail = directorEmail;
+        this.directorPhone = directorPhone;
+        this.surID = surID;
+    }
+    
+    
 
     public int getHospitalId() {
         return hospitalId;
@@ -153,7 +173,13 @@ public class Hospital {
         this.numOfInPatient = numOfInPatient;
     }
 
-   
+    public void setSurID(int surID) {
+        this.surID = surID;
+    }
+
+    public int getSurID() {
+        return surID;
+    }
 
     @Override
      public String toString() {

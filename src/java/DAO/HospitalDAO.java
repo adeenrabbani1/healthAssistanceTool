@@ -272,7 +272,8 @@ public class HospitalDAO {
                 String directorName = rs.getString("director_name");
                 String directorEmail = rs.getString("director_email");
                 String directorPhone = rs.getString("director_phone");
-                hospitals.add(new Hospital(id, name, phone, license, address, country, numBeds, numPatients, numOutPatient, numInPatient, directorName, directorEmail, directorPhone));
+                int surID = rs.getInt("surveyor_id");
+                hospitals.add(new Hospital(id, name, phone, license, address, country, numBeds, numPatients, numOutPatient, numInPatient, directorName, directorEmail, directorPhone, surID));
             }
         } finally {
             close(myConn, stmt, rs);

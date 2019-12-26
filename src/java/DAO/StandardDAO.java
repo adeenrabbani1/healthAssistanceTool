@@ -69,7 +69,7 @@ public class StandardDAO {
             myConn = getConnection();
             // create sql statement
             String sql = "insert into standards "
-                    + "(code,domain,category,text,header) "
+                    + "(code,domain,category,description,title) "
                     + "values (?,?,?,?,?)";
             // create prepared statement
             stmt = myConn.createStatement();
@@ -162,7 +162,7 @@ public class StandardDAO {
 
     }
     
-    public void updateStandard(Standard std, String code) throws Exception {
+    public void updateStandard(HttpServletRequest req, String id) throws Exception {
 
         Connection myConn = null;
         Statement stmt = null;
@@ -173,17 +173,17 @@ public class StandardDAO {
             // get a connection
             myConn = getConnection();
             // create sql statement
-            String sql = "UPDATE standards SET code = ?,domain = ?,category = ?,text = ?,header = ? where code = ?";
+            String sql = "UPDATE standards SET code = ?,domain = ?,category = ?,description = ?,title = ? where id = ?";
             // create prepared statement
             stmt = myConn.createStatement();
             ps = myConn.prepareStatement(sql);
             // set params
-            ps.setString(1, std.getCode());
-            ps.setString(2, std.getDomain());
-            ps.setString(3, std.getCategory());
-            ps.setString(4, std.getDescription());
-            ps.setString(5, std.getTitle());
-            ps.setString(6, code);
+            ps.setString(1, req.getParameter("code"));
+            ps.setString(2, req.getParameter("domain"));
+            ps.setString(3, req.getParameter("category"));
+            ps.setString(4, req.getParameter("des"));
+            ps.setString(5, req.getParameter("title"));
+            ps.setString(6, id);
             
             //execute query
             ps.executeUpdate();

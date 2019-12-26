@@ -34,17 +34,17 @@
                 <div class="col m-3" id="add">
                     <div class="card text-white bg-primary border-primary" style="box-shadow: 0 4px 8px 4px rgba(0, 0, 0, 0.4); border-radius: 5px">
                         <!--<img src="https://pngimage.net/wp-content/uploads/2018/06/standard-png-5.png" class="card-img" alt="...">-->
-                        <div class="card-header">
+                        <form action="../adminController" method="post">
+                            <div class="card-header">
 
-                            <button type="button" class="close text-white" id="addbtn">
-                                <i class="fa fa-window-maximize" aria-hidden="true"></i>
-                            </button>
+                                <button type="button" class="close text-white" id="addbtn">
+                                    <i class="fa fa-window-maximize" aria-hidden="true"></i>
+                                </button>
 
-                            <h1 class="text-center mt-2 text-white"><i class="fa fa-plus" aria-hidden="true"></i> Add Standard</h1>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">
-                            <form action="../adminController" method="post">
+                                <h1 class="text-center mt-2 text-white"><i class="fa fa-plus" aria-hidden="true"></i> Add Standard</h1>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="title">Title</label>
@@ -81,12 +81,12 @@
                                         </select>
                                     </div>
                                 </div>
-                            </form>
-                            </p>
-                        </div>
-                        <div class="card-footer">
-                            <button type="submit" name="command" value="addStand" class="btn btn-warning">Add Standard</button> 
-                        </div>
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" name="command" value="addStand" class="btn btn-warning">Add Standard</button> 
+                            </div>
+                        </form>
                     </div>
                 </div>
 
@@ -144,6 +144,7 @@
                     </button>
                 </div>
                 <form action="../adminController" method="post">
+                    <input name="id" hidden value="${festival.getId()}">
                     <div class="modal-body row pl-5 pr-5" style="font-weight: bold">
                         <div class="col-md-12 text-info">
                             <h3 class="text-white">Standard Details</h3>
@@ -151,23 +152,79 @@
                             <div class="form-group">
                                 <label class="col-form-label col-form-label-sm" for="inputDefault">Standard Code:</label>
                                 <input type="text" class="form-control form-control-sm" value="${festival.getCode()}" 
-                                       placeholder="Standard Code" id="inputDefault" name="code">
+                                       placeholder="Standard Code" id="inputDefault" name="code" required>
 
                                 <label class="col-form-label col-form-label-sm" for="inputDefault1">Standard Type:</label>
-                                <input type="text" class="form-control form-control-sm" value="${festival.getDomain()}" 
-                                       placeholder="Standard Type" id="inputDefault1" name="domain">
+                                <select id="domain" class="form-control" name="domain" required>
+                                    <option selected hidden>Choose...</option>
+                                    <c:choose>
+                                        <c:when test = "${festival.getDomain() == 'leadership Management'}">
+                                            <option selected value="leadership Management">leadership Management</option>
+                                            <option value="Patient Public Involvement">Patient Public Involvement</option>
+                                            <option value="Safe Evidence Based Practice">Safe Evidence Based Practice</option>
+                                            <option value="Safe Environment">Safe Environment</option>
+                                            <option value="Life Long Learning">Life Long Learning</option>
+                                        </c:when>
+                                        <c:when test = "${festival.getDomain() == 'Patient Public Involvement'}">
+                                            <option value="leadership Management">leadership Management</option>
+                                            <option selected value="Patient Public Involvement">Patient Public Involvement</option>
+                                            <option value="Safe Evidence Based Practice">Safe Evidence Based Practice</option>
+                                            <option value="Safe Environment">Safe Environment</option>
+                                            <option value="Life Long Learning">Life Long Learning</option>
+                                        </c:when>
+                                        <c:when test = "${festival.getDomain() == 'Safe Evidence Based Practice'}">
+                                            <option value="leadership Management">leadership Management</option>
+                                            <option value="Patient Public Involvement">Patient Public Involvement</option>
+                                            <option selected value="Safe Evidence Based Practice">Safe Evidence Based Practice</option>
+                                            <option value="Safe Environment">Safe Environment</option>
+                                            <option value="Life Long Learning">Life Long Learning</option>
+                                        </c:when>
+                                        <c:when test = "${festival.getDomain() == 'Safe Environment'}">
+                                            <option value="leadership Management">leadership Management</option>
+                                            <option value="Patient Public Involvement">Patient Public Involvement</option>
+                                            <option value="Safe Evidence Based Practice">Safe Evidence Based Practice</option>
+                                            <option selected value="Safe Environment">Safe Environment</option>
+                                            <option value="Life Long Learning">Life Long Learning</option>
+                                        </c:when>
+                                        <c:when test = "${festival.getDomain() == 'Life Long Learning'}">
+                                            <option value="leadership Management">leadership Management</option>
+                                            <option value="Patient Public Involvement">Patient Public Involvement</option>
+                                            <option value="Safe Evidence Based Practice">Safe Evidence Based Practice</option>
+                                            <option value="Safe Environment">Safe Environment</option>
+                                            <option selected value="Life Long Learning">Life Long Learning</option>
+                                        </c:when>
+                                    </c:choose>
+                                </select>
 
                                 <label class="col-form-label col-form-label-sm" for="inputDefault2">Standard Category:</label>
-                                <input type="text" class="form-control form-control-sm" value="${festival.getCategory()}" 
-                                       placeholder="Standard Category" id="inputDefault2" name="category">
+                                <select id="category" class="form-control" name="category" required>
+                                    <option selected hidden>Choose...</option>
+                                    <c:choose>
+                                        <c:when test = "${festival.getCategory() == 'Critical'}">
+                                            <option selected>Critical</option>
+                                            <option>Core</option>
+                                            <option>Development</option>
+                                        </c:when>
+                                        <c:when test = "${festival.getCategory() == 'Core'}">
+                                            <option>Critical</option>
+                                            <option selected>Core</option>
+                                            <option>Development</option>
+                                        </c:when>
+                                        <c:when test = "${festival.getCategory() == 'Development'}">
+                                            <option>Critical</option>
+                                            <option>Core</option>
+                                            <option selected>Development</option>
+                                        </c:when>
+                                    </c:choose>
+                                </select>
 
                                 <label class="col-form-label col-form-label-sm" for="inputDefault3">Standard Title:</label>
                                 <input type="text" class="form-control form-control-sm" value="${festival.getTitle()}" 
-                                       placeholder="Standard Title" id="inputDefault3" name="title">
+                                       placeholder="Standard Title" id="inputDefault3" name="title" required>
 
                                 <label class="col-form-label col-form-label-sm" for="inputDefault3">Standard Description:</label>
                                 <input type="text" class="form-control form-control-sm" value="${festival.getDescription()}" 
-                                       placeholder="Standard Description" id="inputDefault3" name="des">
+                                       placeholder="Standard Description" id="inputDefault3" name="des" required>
                             </div>
                             </p>
                         </div>
@@ -175,8 +232,8 @@
                     <div class="modal-footer">
                         <div class="row w-100">
                             <div class="col-md-6 btn-group mb-1">
-                                <button type="submit" name="command" value="update" class="btn btn-primary btn-md"><i class="fa fa-wrench" style="font-size: 1.1em" aria-hidden="true"></i> Update</button>
-                                <button type="submit" name="command" value="delete" class="btn btn-primary btn-md"><i class="fa fa-trash-o" style="font-size: 1.1em" aria-hidden="true"></i> Delete</button>
+                                <button type="submit" name="command" value="updateStand" class="btn btn-primary btn-md"><i class="fa fa-wrench" style="font-size: 1.1em" aria-hidden="true"></i> Update</button>
+                                <button type="submit" name="command" value="deleteStand" class="btn btn-primary btn-md"><i class="fa fa-trash-o" style="font-size: 1.1em" aria-hidden="true"></i> Delete</button>
                             </div>
                             <div class="col-md-6 btn-group mb-1">
                                 <button type="button" class="btn btn-primary btn-md" data-dismiss="modal"><i class="fa fa-times-circle"  style="font-size: 1.1em" aria-hidden="true"></i> Close</button>

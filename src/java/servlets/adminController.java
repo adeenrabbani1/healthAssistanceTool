@@ -15,7 +15,10 @@ import entity.Hospital;
 import entity.Standard;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.nio.file.Files.list;
+import static java.rmi.Naming.list;
 import java.sql.ResultSet;
+import static java.util.Collections.list;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -153,6 +156,9 @@ public class adminController extends HttpServlet {
 
         try {
             stand.addStandard(std);
+            session.removeAttribute("standards");
+            List<Standard> standards = new StandardDAO().fetchStandards();
+            session.setAttribute("standards", standards);
             session.setAttribute("flash", "addStd");
             response.sendRedirect("admin/standard.jsp");
         } catch (Exception ex) {
@@ -176,8 +182,11 @@ public class adminController extends HttpServlet {
         Standard std = new Standard(0, code, des, title, category, domain);
 
         try {
-            stand.addStandard(std);
-            session.setAttribute("flash", "addStd");
+            stand.deleteStandard(std);
+            session.removeAttribute("standards");
+            List<Standard> standards = new StandardDAO().fetchStandards();
+            session.setAttribute("standards", standards);
+            session.setAttribute("flash", "deleteStd");
             response.sendRedirect("admin/standard.jsp");
         } catch (Exception ex) {
             Logger.getLogger(adminController.class.getName()).log(Level.SEVERE, null, ex);
@@ -191,27 +200,20 @@ public class adminController extends HttpServlet {
             HttpSession session = request.getSession(true);
             List<Standard> standards = null;
             standards = (List<Standard>) session.getAttribute("standards");
-            
-            String code = request.getParameter("code");
-            String title = request.getParameter("title");
-            String des = request.getParameter("des");
-            String category = request.getParameter("category");
-            String domain = request.getParameter("domain");
-
-            Standard std = new Standard(0, code, des, title, category, domain);
 
             for (; standards.size() > i; i++) {
-                if (request.getParameter("code").equals(standards.get(i).getCode())) {
+                if (request.getParameter("id").equals(String.valueOf(standards.get(i).getId()))) {
+                    System.out.println(String.valueOf(standards.get(i).getId()));
                     break;
                 }
             }
 
-            new StandardDAO().updateStandard(std, standards.get(i).getCode());
+            new StandardDAO().updateStandard(request, String.valueOf(standards.get(i).getId()));
             session.removeAttribute("standards");
             standards = new StandardDAO().fetchStandards();
             session.setAttribute("standards", standards);
-            session.setAttribute("flash", "updated");
-            response.sendRedirect("admin/dashboard.jsp");
+            session.setAttribute("flash", "updatedStd");
+            response.sendRedirect("admin/standard.jsp");
         } catch (Exception ex) {
             Logger.getLogger(adminController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -260,10 +262,10 @@ public class adminController extends HttpServlet {
             }
             surID = request.getParameter("sur");
 
+            new HospitalDAO().updateHospital(hospitals.get(i), surID);
             session.removeAttribute("hospitals");
             hospitals = new HospitalDAO().fetchHospital();
             session.setAttribute("hospitals", hospitals);
-            new HospitalDAO().updateHospital(hospitals.get(i), surID);
             session.setAttribute("flash", "assigned");
             response.sendRedirect("admin/dashboard.jsp");
         } catch (Exception ex) {
@@ -302,7 +304,7 @@ public class adminController extends HttpServlet {
             List<Hospital> hospitals = null;
             hospitals = (List<Hospital>) session.getAttribute("hospitals");
             for (; hospitals.size() > i; i++) {
-                if (request.getParameter("dirPhone").equals(hospitals.get(i).getDirectorPhone())) {
+                if (request.getParameter("id").equals(String.valueOf(hospitals.get(i).getHospitalId()))) {
                     break;
                 }
             }

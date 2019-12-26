@@ -34,6 +34,14 @@
                 <script>showNotification("<strong>Success!</strong> Standard has been added.")</script>
                 <% session.removeAttribute("flash"); %>
             </c:when>
+            <c:when test="${flash == 'deleteStd'}">
+                <script>showNotification("<strong>Success!</strong> Standard has been deleted.")</script>
+                <% session.removeAttribute("flash"); %>
+            </c:when>
+            <c:when test="${flash == 'updatedStd'}">
+                <script>showNotification("<strong>Success!</strong> Standard has been updated.")</script>
+                <% session.removeAttribute("flash"); %>
+            </c:when>
         </c:choose>
     </body>
 </html>
