@@ -203,6 +203,78 @@ public class HospitalDAO {
     }
       
     
+    public void updateStatus(int hid, int sid) throws Exception{
+        
+         Connection myConn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        PreparedStatement ps = null;
+
+        try {
+            //get a connection
+            myConn = getConnection();
+            //create sql statement
+            String sql = "";
+            
+            sql = "UPDATE hospital SET status= 'scored' WHERE hospital_id =? AND surveyor_id =?";
+            
+            stmt = myConn.createStatement();
+            //rs = stmt.executeQuery(sql);
+            ps = myConn.prepareStatement(sql);
+            ps.setInt(1, hid);
+            ps.setInt(2, sid);
+            ps.executeUpdate();
+        } finally {
+            close(myConn, stmt, rs);
+        }
+       
+        
+    }
+    
+    public  List<Hospital>  fetchScoredHospitals(int survID) throws Exception
+    {
+        //fetching the hospitals alredy scored by the surveryor
+        List<Hospital> hospitals = new ArrayList<>();
+        Connection myConn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            //get a connection
+            myConn = getConnection();
+            //create sql statement
+            String sql = "";
+            if(survID == 0){
+                   sql = "SELECT * FROM hospital";
+            }else{
+                 sql = "SELECT * FROM hospital WHERE surveyor_id = '" + survID + "' AND status ='scored'";
+            }
+            stmt = myConn.createStatement();
+            rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                int id = rs.getInt("hospital_id");
+                String name = rs.getString("name");
+                String phone = rs.getString("phone");
+                String license = rs.getString("license_num");
+                String address = rs.getString("address");
+                String country = rs.getString("country");
+                int numBeds = rs.getInt("num_of_beds");
+                int numPatients = rs.getInt("num_of_patients");
+                int numOutPatient = rs.getInt("num_of_out_patient");
+                int numInPatient = rs.getInt("num_of_in_patient");
+                String directorName = rs.getString("director_name");
+                String directorEmail = rs.getString("director_email");
+                String directorPhone = rs.getString("director_phone");
+                hospitals.add(new Hospital(id, name, phone, license, address, country, numBeds, numPatients, numOutPatient, numInPatient, directorName, directorEmail, directorPhone));
+            }
+        } finally {
+            close(myConn, stmt, rs);
+        }
+        return hospitals;
+    }
+        
+    
+    
     public List<Hospital> fetchAssignedHospital(int survID) throws SQLException, Exception{
         //list of admins to hold the values fetched from the database
         List<Hospital> hospitals = new ArrayList<>();
@@ -218,7 +290,7 @@ public class HospitalDAO {
             if(survID == 0){
                    sql = "SELECT * FROM hospital";
             }else{
-                 sql = "SELECT * FROM hospital WHERE surveyor_id = '" + survID + "'";
+                 sql = "SELECT * FROM hospital WHERE surveyor_id = '" + survID + "' AND status ='pending'";
             }
             stmt = myConn.createStatement();
             rs = stmt.executeQuery(sql);

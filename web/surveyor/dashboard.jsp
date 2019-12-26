@@ -9,10 +9,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <jsp:include page="../common/header.html"/>
+        <jsp:include page="../common/header.jsp"/>
+        
+        
+        <script src="../assets/js/main.js"></script>
     </head>
     <body style="background-color: #f5f5f5">
 
+         
 
         <main role="main">
 
@@ -21,17 +25,17 @@
                 <div class="container">
                     <h1 class="display-3">Hello,</h1> <h2>${user.getName()}</h2>
                     <p>Welcome to your dashboard. Please review your assigned Hospitals below! HAPPY SCORING!</p>
-                    <p><a class="btn btn-danger" href="#" role="button"> View Profile&raquo;</a></p>
+                    <p><a class="btn btn-danger" href="surveyorController?command=ME" role="button"> View Profile&raquo;</a></p>
                 </div>
             </div>
         </main>
 
-
+        <jsp:include page="../common/errorFlash.jsp"/>
 
 
 
         <c:if test="${empty surveyorHospitals}">
-            <h1>You Dont have any Hospitals to Score! Have a chill time!</h1>
+            <h2 style="text-align: center; color: green">You Dont have any Hospitals to Score! Have a chill time!</h2>
         </c:if>
         <div class="container-fluid">
             <div class="row mt-3 mb-3 justify-content-center">
@@ -118,15 +122,15 @@
                             </div>
                         </div>
                         <div class="col-md-6 btn-group mb-1 card-footer">
-                            
+
                             <a href="surveyorController?hosp=${festival.getHospitalId()}&command=SCORE"style="background-color: #136384">
                                 <button type="button" name="upd" style="background-color: #136384" class="btn btn-primary btn-md">
                                     <i class="fa fa-wrench" style="font-size: 1.1em" aria-hidden="true"></i> Score Hospital
                                 </button>
                             </a>
-                            
-                            
-                            
+
+
+
 
                         </div>
                     </div>
