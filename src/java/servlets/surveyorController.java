@@ -96,24 +96,32 @@ public class surveyorController extends HttpServlet {
 
                 break;
             }
-            case "CHANGE":{
+            case "CHANGE": {
                 HttpSession session = request.getSession(true);
                 Surveyor s = (Surveyor) session.getAttribute("user");
                 //code to change the status of the surveyor!
                 //redirects to the same page with flash message
-                
+
                 SurveyorDAO p = new SurveyorDAO();
-            try {
-                p.changeStatus(s.getSurv_id(), s.getStatus());
-            } catch (Exception ex) {
-                Logger.getLogger(surveyorController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-             session.setAttribute("flash", "status");
-             RequestDispatcher rd = request.getRequestDispatcher("surveyor/Myprofile.jsp");
-             rd.forward(request, response);
-            
-                
+                try {
+                    p.changeStatus(s.getSurv_id(), s.getStatus());
+                } catch (Exception ex) {
+                    Logger.getLogger(surveyorController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Surveyor tempS = null;
+                try {
+                    tempS = p.fetchSurv();
+                } catch (Exception ex) {
+                    Logger.getLogger(surveyorController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                session.removeAttribute("user");
+                session.setAttribute("user", tempS);
+                session.setAttribute("flash", "status");
+                response.sendRedirect("surveyor/Myprofile.jsp");
+//             RequestDispatcher rd = request.getRequestDispatcher("surveyor/Myprofile.jsp");
+//             rd.forward(request, response);
+//            
+
                 break;
             }
 
