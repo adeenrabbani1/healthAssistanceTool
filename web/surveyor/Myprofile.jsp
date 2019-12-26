@@ -10,11 +10,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <jsp:include page="../common/header.jsp"/>
+      
         
     </head>
     <body>
-        <jsp:include page="../common/errorFlash.jsp"/>
+        <jsp:include page="../common/header.jsp"/>
+         <jsp:include page="../common/errorFlash.jsp"/>
+          
+       
         <div class="container-fluid" style="padding: 140px">
             <div class="card text-center">
                 <div class="card-header" style="background-color: orange;">

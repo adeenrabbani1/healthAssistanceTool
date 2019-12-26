@@ -83,7 +83,7 @@ public class SurveyorDAO {
     }
     
     //only fetching the surveyor for updating the session
-   public Surveyor fetchSurv() throws Exception{
+   public Surveyor fetchSurv(int sid) throws Exception{
        
        Surveyor s = null;
        Connection myConn = null;
@@ -95,7 +95,7 @@ public class SurveyorDAO {
              // get a connection
             myConn = getConnection();
             // create sql statement
-            String sql = "SELECT * FROM surveyor";
+            String sql = "SELECT * FROM surveyor WHERE surv_id = '"+sid+"'";
             stmt = myConn.createStatement();
             rs = stmt.executeQuery(sql);
             while(rs.next()){

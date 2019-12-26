@@ -21,11 +21,11 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-        <script src="../assets/js/main.js"></script>
+<!--        <script src="../assets/js/main.js"></script>-->
 
     </head>
     <body>
-
+        <jsp:include page="../common/errorFlash.jsp"/>
 
 
         <c:if test="${user.getRole().equals('admin')}">
@@ -68,10 +68,10 @@
                 <div class="collapse navbar-collapse" id="navbarColor02">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="surveyor/dashboard.jsp">Home <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="../surveyor/dashboard.jsp">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="surveyorController?command=HISTORY">Scoring History </a>
+                            <a class="nav-link" href="../surveyor/history.jsp">Scoring History </a>
                         </li>
                     </ul>
                 </div>

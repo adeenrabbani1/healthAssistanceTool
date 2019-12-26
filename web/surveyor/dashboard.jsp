@@ -25,7 +25,7 @@
                 <div class="container">
                     <h1 class="display-3">Hello,</h1> <h2>${user.getName()}</h2>
                     <p>Welcome to your dashboard. Please review your assigned Hospitals below! HAPPY SCORING!</p>
-                    <p><a class="btn btn-danger" href="surveyorController?command=ME" role="button"> View Profile&raquo;</a></p>
+                    <p><a class="btn btn-danger" href="../surveyorController?command=ME" role="button"> View Profile&raquo;</a></p>
                 </div>
             </div>
         </main>

@@ -83,16 +83,17 @@ public class surveyorController extends HttpServlet {
                     Logger.getLogger(surveyorController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                request.setAttribute("values", p);
-                RequestDispatcher rd = request.getRequestDispatcher("surveyor/history.jsp");
-                rd.forward(request, response);
+               
+                session.setAttribute("values",p );
+                response.sendRedirect("surveyor/history.jsp");
+//                RequestDispatcher rd = request.getRequestDispatcher("surveyor/history.jsp");
+//                rd.forward(request, response);
 
             }
             case "ME": {
 
                 //serve the profile page for surveyor
-                RequestDispatcher rd = request.getRequestDispatcher("surveyor/Myprofile.jsp");
-                rd.forward(request, response);
+                response.sendRedirect("surveyor/Myprofile.jsp");
 
                 break;
             }
@@ -110,13 +111,22 @@ public class surveyorController extends HttpServlet {
                 }
                 Surveyor tempS = null;
                 try {
-                    tempS = p.fetchSurv();
+                    tempS = p.fetchSurv(s.getSurv_id());
                 } catch (Exception ex) {
                     Logger.getLogger(surveyorController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                String val = "" ;
+                if(s.getStatus().equals("active")){
+                    val = "status";
+                }else{
+                    val = "active";
+                }
+               
+                session.setAttribute("flash", val);
+                // System.out.println(session.getAttribute("flash"));
                 session.removeAttribute("user");
                 session.setAttribute("user", tempS);
-                session.setAttribute("flash", "status");
+                
                 response.sendRedirect("surveyor/Myprofile.jsp");
 //             RequestDispatcher rd = request.getRequestDispatcher("surveyor/Myprofile.jsp");
 //             rd.forward(request, response);
@@ -182,13 +192,15 @@ public class surveyorController extends HttpServlet {
                 Surveyor s = (Surveyor) session.getAttribute("user");
                 try {
                     List<Hospital> hospitals = new HospitalDAO().fetchAssignedHospital(s.getSurv_id());
-                    request.setAttribute("surveyorHospitals", hospitals);
+                    //request.setAttribute("surveyorHospitals", hospitals);
+                    session.setAttribute("surveyorHospitals", hospitals);
+                   
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-                RequestDispatcher rd = request.getRequestDispatcher("surveyor/dashboard.jsp");
-                rd.forward(request, response);
+                response.sendRedirect("surveyor/dashboard.jsp");
+//                RequestDispatcher rd = request.getRequestDispatcher("surveyor/dashboard.jsp");
+//                rd.forward(request, response);
 
                 break;
             }

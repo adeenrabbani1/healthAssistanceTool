@@ -4,14 +4,14 @@
  * and open the template in the editor.
  */
 
-function showNotification(message) {
-
+function showNotification1(message,type1) {
+    console.log("the value is ", type1)
     $.notify({
         icon: "add_alert",
         message: message
 
     }, {
-        type: 'warning',
+        type: 'success' ,
         timer: 30,
         placement: {
             from: 'top',
