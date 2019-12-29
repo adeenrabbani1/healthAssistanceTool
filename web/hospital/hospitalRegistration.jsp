@@ -23,7 +23,7 @@
                         <input type="hidden" name="command" value="APPLY" />
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="name">Email</label>
+                                <label for="name">Hospital Name</label>
                                 <input type="text" class="form-control" name="name" required placeholder="Enter Hospital Name">
                             </div>
                             <div class="form-group col-md-6">
