@@ -29,9 +29,10 @@ public class Hospital {
     private String directorEmail;
     private String directorPhone;
     private int surID;
+    private String status;
     //constructor for setting all the values for the hostpital
 
-    public Hospital(int hospitalId, String name, String phone, String licenseNum, String address, String country, int numOfBeds, int numOfPatients, int numOfOutPatient, int numOfInPatient, String directorName, String directorEmail, String directorPhone) {
+    public Hospital(int hospitalId, String name, String phone, String licenseNum, String address, String country, int numOfBeds, int numOfPatients, int numOfOutPatient, int numOfInPatient, String directorName, String directorEmail, String directorPhone,String status) {
 
         this.hospitalId = hospitalId;
         this.name = name;
@@ -43,27 +44,20 @@ public class Hospital {
         this.numOfPatients = numOfPatients;
         this.numOfOutPatient = numOfOutPatient;
         this.numOfInPatient = numOfInPatient;
-        
+        this.status = status;
         this.directorName = directorName;
         this.directorEmail = directorEmail;
         this.directorPhone = directorPhone;
     }
 
-    public Hospital(int hospitalId, String name, String phone, String licenseNum, String address, String country, int numOfBeds, int numOfPatients, int numOfOutPatient, int numOfInPatient, String directorName, String directorEmail, String directorPhone, int surID) {
-        this.hospitalId = hospitalId;
-        this.name = name;
-        this.phone = phone;
-        this.licenseNum = licenseNum;
-        this.address = address;
-        this.country = country;
-        this.numOfBeds = numOfBeds;
-        this.numOfPatients = numOfPatients;
-        this.numOfOutPatient = numOfOutPatient;
-        this.numOfInPatient = numOfInPatient;
-        this.directorName = directorName;
-        this.directorEmail = directorEmail;
-        this.directorPhone = directorPhone;
-        this.surID = surID;
+   
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
     
     

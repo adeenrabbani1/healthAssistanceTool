@@ -10,9 +10,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <jsp:include page="../common/header.html"/> //for adding external common files
+        <jsp:include page="../common/header.jsp"/> 
     </head>
     <body>
+          <jsp:include page="../common/errorFlash.jsp"/>
 
         <div class="row mt-5">
             <div class="col-md-6 m-auto">

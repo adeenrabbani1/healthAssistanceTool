@@ -170,8 +170,8 @@ public class HospitalDAO {
             myConn = getConnection();
             // create sql statement
             String sql = "insert into hospital "
-                    + "(name,phone,license_num,address,country,num_of_beds,num_of_patients,num_of_out_patient,num_of_in_patient,director_name,director_email,director_phone)"
-                    + "values (?,?,?,?,?,?,?,?,?,?,?,?)";
+                    + "(name,phone,license_num,address,country,num_of_beds,num_of_patients,num_of_out_patient,num_of_in_patient,director_name,director_email,director_phone,status)"
+                    + "values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
             // create prepared statement
             stmt = myConn.createStatement();
 
@@ -189,6 +189,7 @@ public class HospitalDAO {
             ps.setString(10, hos.getDirectorName());
             ps.setString(11, hos.getDirectorEmail());
             ps.setString(12, hos.getDirectorPhone());
+            ps.setString(13, hos.getStatus());
 
             //execute query
             int row = ps.executeUpdate();
@@ -265,7 +266,8 @@ public class HospitalDAO {
                 String directorName = rs.getString("director_name");
                 String directorEmail = rs.getString("director_email");
                 String directorPhone = rs.getString("director_phone");
-                hospitals.add(new Hospital(id, name, phone, license, address, country, numBeds, numPatients, numOutPatient, numInPatient, directorName, directorEmail, directorPhone));
+                String status = rs.getString("status");
+                hospitals.add(new Hospital(id, name, phone, license, address, country, numBeds, numPatients, numOutPatient, numInPatient, directorName, directorEmail, directorPhone,status));
             }
         } finally {
             close(myConn, stmt, rs);
@@ -308,7 +310,8 @@ public class HospitalDAO {
                 String directorName = rs.getString("director_name");
                 String directorEmail = rs.getString("director_email");
                 String directorPhone = rs.getString("director_phone");
-                hospitals.add(new Hospital(id, name, phone, license, address, country, numBeds, numPatients, numOutPatient, numInPatient, directorName, directorEmail, directorPhone));
+                String status = rs.getString("status");
+                hospitals.add(new Hospital(id, name, phone, license, address, country, numBeds, numPatients, numOutPatient, numInPatient, directorName, directorEmail, directorPhone,status));
             }
         } finally {
             close(myConn, stmt, rs);
@@ -345,7 +348,10 @@ public class HospitalDAO {
                 String directorEmail = rs.getString("director_email");
                 String directorPhone = rs.getString("director_phone");
                 int surID = rs.getInt("surveyor_id");
-                hospitals.add(new Hospital(id, name, phone, license, address, country, numBeds, numPatients, numOutPatient, numInPatient, directorName, directorEmail, directorPhone, surID));
+                String status = rs.getString("status");
+             Hospital p = new Hospital(id, name, phone, license, address, country, numBeds, numPatients, numOutPatient, numInPatient, directorName, directorEmail, directorPhone,status);
+             p.setSurID(surID);
+             hospitals.add(p);
             }
         } finally {
             close(myConn, stmt, rs);

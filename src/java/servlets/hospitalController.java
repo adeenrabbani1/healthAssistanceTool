@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -82,13 +83,18 @@ public class hospitalController extends HttpServlet {
         String demail = request.getParameter("demail");
         String dphone = request.getParameter("dphone");
 
-        Hospital hospital = new Hospital(0, name, phone, license, address, country, numBeds, numPatient, numOutPat, numInPat, dname, demail, dphone);
+        Hospital hospital = new Hospital(0, name, phone, license, address, country, numBeds, numPatient, numOutPat, numInPat, dname, demail, dphone,"pending");
         out.print(hospital.toString());
         try {
             int row = hdb.saveHospital(hospital);
-
-            out.print(row);
+            HttpSession session = request.getSession(true);
+            session.setAttribute("flash", "registered");
+             response.sendRedirect("hospital/hospitalRegistration.jsp");
+          
         } catch (Exception ex) {
+             HttpSession session = request.getSession(true);
+            session.setAttribute("flash", "db");
+             response.sendRedirect("hospital/hospitalRegistration.jsp");
             Logger.getLogger(hospitalController.class.getName()).log(Level.SEVERE, null, ex);
         }
 

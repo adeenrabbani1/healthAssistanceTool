@@ -18,35 +18,35 @@
         <!--<script src="../assets/js/main.js"></script>-->
         <script>
 
-    function showNotification1(message, type1) {
-        console.log("the value is ", type1)
-        $.notify({
-            icon: "add_alert",
-            message: message
+            function showNotification1(message, type1) {
+                console.log("the value is ", type1)
+                $.notify({
+                    icon: "add_alert",
+                    message: message
 
-        }, {
-            type: type1,
-            timer: 30,
-            placement: {
-                from: 'top',
-                align: 'right'
+                }, {
+                    type: type1,
+                    timer: 30,
+                    placement: {
+                        from: 'top',
+                        align: 'right'
+                    }
+                });
             }
-        });
-    }
 
-    $(document).ready(function () {
-        $("#addbtn").click(function () {
-            $("#list").toggle("slow");
-        });
+            $(document).ready(function () {
+                $("#addbtn").click(function () {
+                    $("#list").toggle("slow");
+                });
 
-        $("#listbtn").click(function () {
-            $("#add").toggle("slow");
-        });
-    });
+                $("#listbtn").click(function () {
+                    $("#add").toggle("slow");
+                });
+            });
 
 
 
-</script>
+        </script>
 
     </head>
     <body>
@@ -85,6 +85,14 @@
             </c:when>
             <c:when test="${flash == 'active'}">
                 <script>showNotification1("<strong>Success!</strong> Welcome Back. We missed you!", "success")</script>
+                <% session.removeAttribute("flash");%>
+            </c:when>
+            <c:when test="${flash == 'registered'}">
+                <script>showNotification1("<strong>Success!</strong>Your application is submitted. We will email you once your results are ready! Please note it normally take 15 working days.", "success")</script>
+                <% session.removeAttribute("flash");%>
+            </c:when>
+            <c:when test="${flash == 'db'}">
+                <script>showNotification1("<strong>Alert!</strong>You have entered incorrect Values. Please fill agian" ,"danger")</script>
                 <% session.removeAttribute("flash");%>
             </c:when>
         </c:choose>

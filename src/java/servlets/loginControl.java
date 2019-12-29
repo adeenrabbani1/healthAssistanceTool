@@ -115,7 +115,7 @@ public class loginControl extends HttpServlet {
                             idHos = Integer.parseInt(rs.getString(id), 10);
                             Hospital hospital = new Hospital(idHos, rs.getString("name"), rs.getString("phone"), rs.getString("license_num"), rs.getString("address"), rs.getString("country"), Integer.parseInt(rs.getString("num_of_beds"),10), 
                             Integer.parseInt(rs.getString("num_of_patients"),10), Integer.parseInt(rs.getString("num_of_out_patient"), 10), Integer.parseInt(rs.getString("num_of_in_patient"), 10), rs.getString("director_name"), 
-                            rs.getString("director_email"), rs.getString("director_phone"));
+                            rs.getString("director_email"), rs.getString("director_phone"),rs.getString("status"));
                             HttpSession session = request.getSession(true);
                             session.setAttribute("user", hospital);
                         }
