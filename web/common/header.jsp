@@ -21,7 +21,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-<!--        <script src="../assets/js/main.js"></script>-->
+        <!--        <script src="../assets/js/main.js"></script>-->
 
     </head>
     <body>
@@ -71,13 +71,16 @@
                             <a class="nav-link" href="../surveyor/dashboard.jsp">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="../surveyor/history.jsp">Scoring History </a>
+                            <a class="nav-link" href="../surveyorController?command=HISTORY">Scoring History </a>
                         </li>
                     </ul>
+                    <div class="form-inline my-2 my-lg-0">
+                        <a class="nav-link  text-white" href="../logoutControl"><i class="fa fa-sign-out" aria-hidden="true" style="font-size: 15px"></i> Logout</a>
+                    </div>
                 </div>
             </nav>
         </c:if>
-         <c:if test="${user.getRole()== null}">
+        <c:if test="${user.getRole()== null}">
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <a class="navbar-brand" href="#">Hospital Assistance Tool</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-label="Toggle navigation">

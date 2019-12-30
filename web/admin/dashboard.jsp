@@ -23,16 +23,17 @@
         <jsp:include page="../common/header.jsp"/>
     </head>
     <body style="background-color: #f5f5f5">
+         <jsp:include page="../common/errorFlash.jsp"/>
         <div class="container-fluid">
             <div class="mt-5 mb-3 text-center">
                 <!--<h1><small>Hello</small> ${user.getName()}</h1>-->
                 <h4><i class="fa fa-calendar-o" style="font-size:24px"></i> all hospitals</h4>
                 <br>
                 <!--<hr>-->
-                <jsp:include page="../common/errorFlash.jsp"/>
+               
             </div>
             <div class="row mt-3 mb-3 justify-content-center">
-
+            
                 <c:forEach items="${hospitals}" var="festival">
                     <c:choose>
                         <c:when test="${festival.getSurID() > 0}">

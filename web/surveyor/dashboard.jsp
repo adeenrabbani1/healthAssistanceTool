@@ -16,7 +16,7 @@
     </head>
     <body style="background-color: #f5f5f5">
 
-         
+         <jsp:include page="../common/errorFlash.jsp"/>
 
         <main role="main">
 
@@ -30,7 +30,7 @@
             </div>
         </main>
 
-        <jsp:include page="../common/errorFlash.jsp"/>
+        
 
 
 
@@ -123,7 +123,7 @@
                         </div>
                         <div class="col-md-6 btn-group mb-1 card-footer">
 
-                            <a href="surveyorController?hosp=${festival.getHospitalId()}&command=SCORE"style="background-color: #136384">
+                            <a href="../surveyorController?hosp=${festival.getHospitalId()}&command=SCORE"style="background-color: #136384">
                                 <button type="button" name="upd" style="background-color: #136384" class="btn btn-primary btn-md">
                                     <i class="fa fa-wrench" style="font-size: 1.1em" aria-hidden="true"></i> Score Hospital
                                 </button>

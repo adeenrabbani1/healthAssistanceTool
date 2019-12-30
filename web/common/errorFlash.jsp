@@ -52,31 +52,31 @@
     <body>
         <c:choose>
             <c:when test="${flash == 'updated'}">
-                <script>showNotification("<strong>Success!</strong> Hospital has been updated.", "success")</script>
+                <script>showNotification1("<strong>Success!</strong> Hospital has been updated.", "success")</script>
                 <% session.removeAttribute("flash"); %>
             </c:when> 
             <c:when test="${flash == 'deleted'}">
-                <script>showNotification("<strong>Success!</strong> Hospital has been deleted.", "success")</script>
+                <script>showNotification1("<strong>Success!</strong> Hospital has been deleted.", "success")</script>
                 <% session.removeAttribute("flash"); %>
             </c:when> 
             <c:when test="${flash == 'assigned'}">
-                <script>showNotification("<strong>Success!</strong> Hospital has been assigned.", "success")</script>
+                <script>showNotification1("<strong>Success!</strong> Hospital has been assigned.", "success")</script>
                 <% session.removeAttribute("flash"); %>
             </c:when> 
             <c:when test="${flash == 'addStd'}">
-                <script>showNotification("<strong>Success!</strong> Standard has been added.", "success")</script>
+                <script>showNotification1("<strong>Success!</strong> Standard has been added.", "success")</script>
                 <% session.removeAttribute("flash"); %>
             </c:when>
             <c:when test="${flash == 'deleteStd'}">
-                <script>showNotification("<strong>Success!</strong> Standard has been deleted.", "success")</script>
+                <script>showNotification1("<strong>Success!</strong> Standard has been deleted.", "success")</script>
                 <% session.removeAttribute("flash"); %>
             </c:when>
             <c:when test="${flash == 'updatedStd'}">
-                <script>showNotification("<strong>Success!</strong> Standard has been updated.", "success")</script>
+                <script>showNotification1("<strong>Success!</strong> Standard has been updated.", "success")</script>
                 <% session.removeAttribute("flash"); %>
             </c:when>
             <c:when test="${flash == 'scored'}">
-                <script>showNotification("<strong>Success!</strong> Your Scores Have been saved Successfully", "success")</script>
+                <script>showNotification1("<strong>Success!</strong> Your Scores Have been saved Successfully", "success")</script>
                 <% session.removeAttribute("flash"); %>
             </c:when> 
             <c:when test="${flash == 'status'}">

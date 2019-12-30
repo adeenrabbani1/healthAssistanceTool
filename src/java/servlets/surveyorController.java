@@ -83,11 +83,12 @@ public class surveyorController extends HttpServlet {
                     Logger.getLogger(surveyorController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-               
+                System.out.println(p);
                 session.setAttribute("values",p );
                 response.sendRedirect("surveyor/history.jsp");
 //                RequestDispatcher rd = request.getRequestDispatcher("surveyor/history.jsp");
 //                rd.forward(request, response);
+                break;
 
             }
             case "ME": {
@@ -232,6 +233,10 @@ public class surveyorController extends HttpServlet {
                     // Dispatch to the dashboard with flash messages
                     HospitalDAO hdao = new HospitalDAO();
                     hdao.updateStatus(Integer.parseInt(id), s.getSurv_id());
+                    session.removeAttribute("surveyorHospitals");
+                     List<Hospital> hospitals = new HospitalDAO().fetchAssignedHospital(s.getSurv_id());
+                    //request.setAttribute("surveyorHospitals", hospitals);
+                    session.setAttribute("surveyorHospitals", hospitals);
                     session.setAttribute("flash", "scored");
                     response.sendRedirect("surveyor/dashboard.jsp");
 //                   
